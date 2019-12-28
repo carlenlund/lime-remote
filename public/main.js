@@ -48,7 +48,7 @@ function start() {
 
 function log() {
   document.querySelector('#log').innerHTML =
-      document.querySelector('#log').innerHTML +
-      Array.from(arguments).join(' ') + '<br>';
+      Array.from(arguments).join(' ') + '<br>' +
+      document.querySelector('#log').innerHTML;
   console.log.apply(arguments, null);
 }
