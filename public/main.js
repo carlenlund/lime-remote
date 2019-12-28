@@ -1,5 +1,8 @@
 const socket = io();
 
+let debugElement = document.querySelector('#debug');
+let logElement = document.querySelector('#log');
+
 main();
 
 function main() {
@@ -31,24 +34,18 @@ function start() {
   }
 
   sensor.addEventListener('reading', e => {
-    log("Linear acceleration along the X-axis " + sensor.x);
-    log("Linear acceleration along the Y-axis " + sensor.y);
-    log("Linear acceleration along the Z-axis " + sensor.z);
+    debugElement.innerHTML =
+        `x: ${sensor.x}\ny: ${sensor.y}\nz: ${sensor.z}`;
   });
 
   sensor.addEventListener('error', e => {
-    sensor.errorType = `Error: ${e.error.name}`;
-    sensor.errorMessage = `Error message: ${e.error.message}`;
-    log(sensor.errorType);
-    log(sensor.errorMessage);
+    log(`Error: ${e.error.message}`);
   });
 
   sensor.start();
 }
 
 function log() {
-  document.querySelector('#log').innerHTML =
-      Array.from(arguments).join(' ') + '<br>' +
-      document.querySelector('#log').innerHTML;
+  logElement.innerHTML += Array.from(arguments).join(' ') + '\n';
   console.log.apply(arguments, null);
 }
