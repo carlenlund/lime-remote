@@ -83,9 +83,9 @@ socket.on('serverDisconnected', () => {
 });
 
 function handleGyroscope(sensor) {
-  let x = sensor.dm.alpha;
-  let y = sensor.dm.beta;
-  let z = sensor.dm.gamma;
+  let x = sensor.dm.gamma;
+  let y = sensor.dm.alpha;
+  let z = sensor.dm.beta;
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
   if (pointing) {
     socket.emit('moveRemote', x, y, z);
