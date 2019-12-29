@@ -21,7 +21,6 @@ clientConnectButtonElement.addEventListener('click', function() {
 });
 
 let serverButtonElement = document.querySelector('#server-button');
-let serverIdElement = document.querySelector('#server-id');
 serverButtonElement.addEventListener('click', function() {
   initServer();
   startElement.style.display = 'none';
@@ -29,6 +28,11 @@ serverButtonElement.addEventListener('click', function() {
 });
 let serverElement = document.querySelector('#server');
 serverElement.style.display = 'none';
+let serverIdElement = document.querySelector('#server-id');
+
+let serverCanvas = document.querySelector('#server-canvas');
+serverCanvas.width = 600;
+serverCanvas.height = 400;
 
 //
 // Client code
@@ -101,6 +105,9 @@ socket.on('serverDisconnected', () => {
 // Server code
 //
 
+let remoteX = serverCanvas.width / 2;
+let remoteY = serverCanvas.height / 2;
+
 function initServer() {
   socket.emit('createServer');
 }
@@ -119,6 +126,15 @@ socket.on('moveRemote', (x, y, z) => {
   y = Math.round(y * scale);
   z = Math.round(z * scale);
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
+
+  remoteX += x;
+  remoteY += z;
+  let ctx = serverCanvas.getContext('2d');
+  ctx.fillStyle = '#000';
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(remoteX, remoteY, 2, 0, 2 * Math.PI);
+  ctx.closePath();
 });
 
 //
