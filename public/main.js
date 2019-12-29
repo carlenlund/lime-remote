@@ -105,6 +105,8 @@ socket.on('serverDisconnected', () => {
 //
 
 var lastTime = 0;
+var stopTime = 0;
+var stopDelay = 150;
 var position = {x: 0, y: 0};
 var velocity = {x: 0, y: 0};
 var acceleration = {x: 0, y: 0};
@@ -136,14 +138,18 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('moveRemote', (x, y, z) => {
+  if (Date.now() - stopTime < stopDelay) {
+    return;
+  }
   let scale = 5;
   acceleration = {x: x * scale, y: -z * scale};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
 });
 
 socket.on('stopRemote', () => {
-  acceleration = {x: 0, y: 0};
   velocity = {x: 0, y: 0};
+  acceleration = {x: 0, y: 0};
+  stopTime = Date.now();
 });
 
 function update() {
