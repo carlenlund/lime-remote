@@ -104,7 +104,7 @@ socket.on('serverDisconnected', () => {
 //
 
 var lastTime = 0;
-var position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
+var position = {x: 0, y: 0};
 var velocity = {x: 0, y: 0};
 var acceleration = {x: 0, y: 0};
 
@@ -119,6 +119,7 @@ let serverIdElement = document.querySelector('#server-id');
 let serverCanvas = document.querySelector('#server-canvas');
 serverCanvas.width = 600;
 serverCanvas.height = 400;
+position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
 
 function initServer() {
   socket.emit('createServer');
