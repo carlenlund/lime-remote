@@ -42,6 +42,10 @@ io.on('connection', socket => {
     connectToServer(socket, id);
   });
 
+  socket.on('startRemote', () => {
+    startRemote(socket);
+  });
+
   socket.on('moveRemote', (x, y, z) => {
     moveRemote(socket, x, y, z);
   });
@@ -75,6 +79,13 @@ function connectToServer(socket, serverId) {
   server.clientSocket = socket;
   server.clientSocket.emit('connectedToServer');
   server.socket.emit('connectedToClient');
+}
+
+function stopRemote(socket) {
+  let server = getClientServer(socket);
+  if (server) {
+    server.socket.emit('startRemote');
+  }
 }
 
 function moveRemote(socket, x, y, z) {

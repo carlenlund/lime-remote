@@ -36,6 +36,7 @@ clientConnectButtonElement.addEventListener('click', () => {
 let clientPointButtonElement = document.querySelector('#client-point-button');
 clientPointButtonElement.addEventListener('touchstart', () => {
   pointing = true;
+  socket.emit('startRemote');
 });
 clientPointButtonElement.addEventListener('touchend', () => {
   pointing = false;
@@ -128,10 +129,12 @@ socket.on('connectedToClient', () => {
   log('Connected to client');
 });
 
+socket.on('startRemote', => {
+  showPointer = true;
+  position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
+});
+
 socket.on('moveRemote', (x, y, z) => {
-  if (!showPointer) {
-    position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
-  }
   velocity = {x: x * pointerSpeed.x, y: -z * pointerSpeed.y};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
   showPointer = true;
