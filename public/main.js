@@ -98,10 +98,10 @@ function handleGyroscope(sensor) {
 
 let lastTime = 0;
 let stopTime = 0;
-let stopDelay = 150;
 let position = {x: 0, y: 0};
 let velocity = {x: 0, y: 0};
 let pointerSpeed = {x: 9, y: 10};
+let showPointer = false;
 
 let serverButtonElement = document.querySelector('#server-button');
 serverButtonElement.addEventListener('click', () => {
@@ -132,10 +132,13 @@ socket.on('connectedToClient', () => {
 socket.on('moveRemote', (x, y, z) => {
   velocity = {x: x * pointerSpeed.x, y: -z * pointerSpeed.y};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
+  showPointer = true;
 });
 
 socket.on('stopRemote', () => {
+  position = {x: 0, y: 0};
   velocity = {x: 0, y: 0};
+  showPointer = false;
   stopTime = Date.now();
 });
 
@@ -146,10 +149,6 @@ function update() {
   let deltaTime = (time - lastTime) / 1000;
   lastTime = time;
 
-  if (Date.now() - stopTime < stopDelay) {
-    velocity = {x: 0, y: 0};
-  }
-
   position.x += velocity.x * deltaTime;
   position.y += velocity.y * deltaTime;
 
@@ -158,11 +157,13 @@ function update() {
 
   let ctx = serverCanvas.getContext('2d');
   ctx.clearRect(0, 0, serverCanvas.width, serverCanvas.height);
-  ctx.fillStyle = '#000';
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(position.x, position.y, 20, 0, 2 * Math.PI);
-  ctx.closePath();
+  if (showPointer) {
+    ctx.fillStyle = '#000';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(position.x, position.y, 20, 0, 2 * Math.PI);
+    ctx.closePath();
+  }
 }
 
 //
