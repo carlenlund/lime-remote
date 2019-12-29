@@ -46,6 +46,8 @@ clientPointButtonElement.addEventListener('touchend', () => {
 });
 
 function initClient() {
+  requestSensorPermissions();
+
   gyroscope = new GyroNorm();
   let args = {
     frequency: 60,
@@ -67,6 +69,21 @@ function initClient() {
   });
 }
 
+async function requestSensorPermissions() {
+  await Promise.all([
+    navigator.permissions.query({name: 'accelerometer'}),
+    navigator.permissions.query({name: 'magnetometer'}),
+    navigator.permissions.query({name: 'gyroscope'})
+  ])
+    .then(results => {
+      if (results.every(result => result.state === 'granted')) {
+        log('Permission granted to use orientation sensors.');
+      } else {
+        log('Error: Cannot use orientation sensors.');
+      }
+    });
+}
+
 function connectToServer(id) {
   clientServerId = id;
   socket.emit('connectToServer', id);
@@ -85,10 +102,10 @@ socket.on('serverDisconnected', () => {
   log('Disconnected from server');
 });
 
-function handleGyroscope(sensor) {
-  let x = -sensor.dm.gamma;
-  let y = sensor.dm.beta;
-  let z = sensor.dm.alpha;
+function handleGyroscope(event) {
+  let x = -event.dm.gamma;
+  let y = event.dm.beta;
+  let z = event.dm.alpha;
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
   if (pointing) {
     socket.emit('moveRemote', x, y, z);
