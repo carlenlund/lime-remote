@@ -7,18 +7,26 @@
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <div id="start">
-    <button id="server-button">Server</button>
-    <button id="client-button">Client</button>
+  <div id="start" class="start">
+    <button id="server-button" class="button button--primary">Server</button>
+    <button id="client-button" class="button button--primary">Client</button>
   </div>
 
-  <div id="client">
-    <input id="client-server-id" type="text">
-    <button id="client-connect-button">Connect</button>
-    <button id="client-point-button" class="point-button">Point</button>
+  <div id="client" class="client">
+    <div class="controls">
+      <div>
+        <input id="client-server-id" type="text" class="input">
+        <button id="client-connect-button" class="button">Connect</button>
+      </div>
+      <button id="client-point-button" class="button button--primary point-button">Point</button>
+      <div>
+      </div>
+    </div>
   </div>
-  <div id="server">
-    <h1 id="server-id"></h1>
+
+  <div id="server" class="server">
+    <p>Server ID</p>
+    <p id="server-id" class="server-id"></p>
     <canvas id="server-canvas"></canvas>
   </div>
 

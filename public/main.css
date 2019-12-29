@@ -5,14 +5,72 @@
   padding: 0;
 }
 
+html,
 body {
-  background: #fff;
-  color: #000;
+  height: 100%;
+}
+
+body {
+  background: #222;
+  color: #fff;
   font-family: 'Arial', sans-serif;
   font-size: 14px;
+  padding: 8px;
+}
+
+button,
+input {
+  border: 0;
+  background: none;
+}
+
+.input {
+  background: #fff;
+  padding: 6px;
+}
+
+.button {
+  background: #ddd;
+  color: #000;
+  cursor: pointer;
+  outline: none;
+  padding: 6px;
+}
+
+.button--primary {
+  background: #bf4;
+}
+
+.client {
+  height: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
 }
 
 .point-button {
-  height: 40px;
+  border-radius: 100px;
+  touch-action: manipulation;
+  display: block;
+  height: 100px;
+  margin: 0 auto;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  width: 100px;
 }
+
+/* .point-button:active, */
+.point-button--active {
+  background: #000;
+  color: #fff;
+}
+
+.server-id {
+  font-family: 'Consolas', monospace;
+}
+

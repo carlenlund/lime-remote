@@ -37,10 +37,12 @@ let clientPointButtonElement = document.querySelector('#client-point-button');
 clientPointButtonElement.addEventListener('touchstart', () => {
   pointing = true;
   socket.emit('startRemote');
+  clientPointButtonElement.classList.add('point-button--active');
 });
 clientPointButtonElement.addEventListener('touchend', () => {
   pointing = false;
   socket.emit('stopRemote');
+  clientPointButtonElement.classList.remove('point-button--active');
 });
 
 function initClient() {
@@ -122,7 +124,7 @@ function initServer() {
 }
 
 socket.on('serverCreated', (id) => {
-  serverIdElement.innerHTML = `Server id: ${id}`;
+  serverIdElement.innerHTML = id;
 });
 
 socket.on('connectedToClient', () => {
