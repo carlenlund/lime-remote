@@ -5,34 +5,10 @@ let logElement = document.querySelector('#log');
 
 let startElement = document.querySelector('#start');
 
-let clientButtonElement = document.querySelector('#client-button');
-clientButtonElement.addEventListener('click', function() {
-  initClient();
-  startElement.style.display = 'none';
-  clientElement.style.display = 'block';
-});
 let clientElement = document.querySelector('#client');
 clientElement.style.display = 'none';
-let clientServerIdElement = document.querySelector('#client-server-id');
-let clientConnectButtonElement =
-    document.querySelector('#client-connect-button');
-clientConnectButtonElement.addEventListener('click', function() {
-  connectToServer(clientServerIdElement.value);
-});
-
-let serverButtonElement = document.querySelector('#server-button');
-serverButtonElement.addEventListener('click', function() {
-  initServer();
-  startElement.style.display = 'none';
-  serverElement.style.display = 'block';
-});
 let serverElement = document.querySelector('#server');
 serverElement.style.display = 'none';
-let serverIdElement = document.querySelector('#server-id');
-
-let serverCanvas = document.querySelector('#server-canvas');
-serverCanvas.width = 600;
-serverCanvas.height = 400;
 
 //
 // Client code
@@ -40,6 +16,28 @@ serverCanvas.height = 400;
 
 let connectedToServer = false;
 let clientServerId = null;
+let pointing = false;
+
+let clientButtonElement = document.querySelector('#client-button');
+clientButtonElement.addEventListener('click', () => {
+  initClient();
+  startElement.style.display = 'none';
+  clientElement.style.display = 'block';
+});
+let clientServerIdElement = document.querySelector('#client-server-id');
+let clientConnectButtonElement =
+    document.querySelector('#client-connect-button');
+clientConnectButtonElement.addEventListener('click', () => {
+  connectToServer(clientServerIdElement.value);
+});
+
+let clientPointButtonElement = document.querySelector('#client-point-button');
+clientPointButtonElemen.addEventListener('touchstart', () => {
+  pointing = true;
+});
+clientPointButtonElemen.addEventListener('touchend', () => {
+  pointing = false;
+});
 
 function initClient() {
   if ('LinearAccelerationSensor' in window) {
@@ -70,8 +68,10 @@ function startClient() {
   }
 
   sensor.addEventListener('reading', e => {
-    debugElement.innerHTML = `x: ${sensor.x}\ny: ${sensor.y}\nz: ${sensor.z}`;
-    socket.emit('moveRemote', sensor.x, sensor.y, sensor.z);
+    if (pointing) {
+      debugElement.innerHTML = `x: ${sensor.x}\ny: ${sensor.y}\nz: ${sensor.z}`;
+      socket.emit('moveRemote', sensor.x, sensor.y, sensor.z);
+    }
   });
 
   sensor.addEventListener('error', e => {
@@ -107,6 +107,18 @@ var lastTime = 0;
 var position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
 var velocity = {x: 0, y: 0};
 var acceleration = {x: 0, y: 0};
+
+let serverButtonElement = document.querySelector('#server-button');
+serverButtonElement.addEventListener('click', () => {
+  initServer();
+  startElement.style.display = 'none';
+  serverElement.style.display = 'block';
+});
+let serverIdElement = document.querySelector('#server-id');
+
+let serverCanvas = document.querySelector('#server-canvas');
+serverCanvas.width = 600;
+serverCanvas.height = 400;
 
 function initServer() {
   socket.emit('createServer');
