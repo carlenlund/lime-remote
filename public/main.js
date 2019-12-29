@@ -101,7 +101,6 @@ let stopTime = 0;
 let stopDelay = 150;
 let position = {x: 0, y: 0};
 let velocity = {x: 0, y: 0};
-let acceleration = {x: 0, y: 0};
 let pointerSpeed = 50;
 
 let serverButtonElement = document.querySelector('#server-button');
@@ -131,13 +130,12 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('moveRemote', (x, y, z) => {
-  acceleration = {x: x * pointerSpeed, y: -z * pointerSpeed};
+  velocity = {x: x * pointerSpeed, y: -z * pointerSpeed};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
 });
 
 socket.on('stopRemote', () => {
   velocity = {x: 0, y: 0};
-  acceleration = {x: 0, y: 0};
   stopTime = Date.now();
 });
 
@@ -150,13 +148,10 @@ function update() {
 
   if (Date.now() - stopTime < stopDelay) {
     velocity = {x: 0, y: 0};
-    acceleration = {x: 0, y: 0};
   }
 
   position.x += velocity.x * deltaTime;
   position.y += velocity.y * deltaTime;
-  velocity.x += acceleration.x * deltaTime;
-  velocity.y += acceleration.y * deltaTime;
 
   position.x = Math.max(0, Math.min(serverCanvas.width, position.x));
   position.y = Math.max(0, Math.min(serverCanvas.height, position.y));
