@@ -85,7 +85,7 @@ function moveRemote(socket, x, y, z) {
 }
 
 function stopRemote(socket) {
-  let serverId = getClientServer(socket);
+  let server = getClientServer(socket);
   if (server) {
     server.socket.emit('stopRemote');
   }
