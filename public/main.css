@@ -55,7 +55,6 @@ input {
 
 .point-button {
   border-radius: 100px;
-  touch-action: manipulation;
   display: block;
   height: 100px;
   margin: 0 auto;
@@ -64,7 +63,6 @@ input {
   width: 100px;
 }
 
-/* .point-button:active, */
 .point-button--active {
   background: #000;
   color: #fff;
@@ -74,3 +72,7 @@ input {
   font-family: 'Consolas', monospace;
 }
 
+canvas {
+  background: #fff;
+  width: 100%;
+}
