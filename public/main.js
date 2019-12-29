@@ -130,6 +130,7 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('startRemote', () => {
+  position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
   showPointer = true;
 });
 
