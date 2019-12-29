@@ -18,6 +18,8 @@ let connectedToServer = false;
 let clientServerId = null;
 let pointing = false;
 
+let gyroscope = null;
+
 let clientButtonElement = document.querySelector('#client-button');
 clientButtonElement.addEventListener('click', () => {
   initClient();
@@ -41,38 +43,30 @@ clientPointButtonElement.addEventListener('touchend', () => {
 });
 
 function initClient() {
-  // TODO: Use (absolute) orientation instead, for higher accuracy.
-  if ('LinearAccelerationSensor' in window) {
-    navigator.permissions.query({name: 'accelerometer'}).then(result => {
-      if (result.state != 'granted') {
-        log('Sorry, we\'re not allowed to access sensors on your device..');
-        return;
-      }
-      startClient();
-    }).catch(err => {
-      log('Integration with Permissions API is not enabled, still try to start');
-      startClient();
-    });
-  } else {
-    log('Your browser doesn\'t support sensors.');
-  }
+  gyroscope = new GyroNorm();
+  let args = {
+    frequency: 60,
+    orientationBase: GyroNorm.GAME,
+    decimalCount: 2,
+  };
+  gyroscope.init(args).then(function() {
+    let isAvailable = gyroscope.isAvailable();
+    if (!isAvailable.deviceOrientationAvailable) {
+      log({message:'Device orientation is not available.'});
+    }
+    if (!isAvailable.rotationRateAvailable) {
+      log({message:'Device rotation rate is not available.'});
+    }
+
+    gyroscope.start(handleGyroscope);
+  }).catch(function(e){
+    log(e);
+  });
 }
 
 function startClient() {
-  let options = {
-    frequency: 60,
-  };
-  let sensor = null;
-  try {
-    sensor = new LinearAccelerationSensor(options);
-  } catch (e) {
-    log(e);
-  }
-
   sensor.addEventListener('reading', e => {
     if (pointing) {
-      debugElement.innerHTML = `x: ${sensor.x}\ny: ${sensor.y}\nz: ${sensor.z}`;
-      socket.emit('moveRemote', sensor.x, sensor.y, sensor.z);
     }
   });
 
@@ -101,16 +95,22 @@ socket.on('serverDisconnected', () => {
   log('Disconnected from server');
 });
 
+function handleGyroscope(sensor) {
+  debugElement.innerHTML =
+      `x: ${sensor.do.alpha}\ny: ${sensor.do.beta}\nz: ${sensor.do.gamma}`;
+  socket.emit('moveRemote', sensor.do.alpha, sensor.do.beta, sensor.do.gamma);
+}
+
 //
 // Server code
 //
 
-var lastTime = 0;
-var stopTime = 0;
-var stopDelay = 150;
-var position = {x: 0, y: 0};
-var velocity = {x: 0, y: 0};
-var acceleration = {x: 0, y: 0};
+let lastTime = 0;
+let stopTime = 0;
+let stopDelay = 150;
+let position = {x: 0, y: 0};
+let velocity = {x: 0, y: 0};
+let acceleration = {x: 0, y: 0};
 let pointerSpeed = 50;
 
 let serverButtonElement = document.querySelector('#server-button');
