@@ -121,14 +121,14 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('moveRemote', (x, y, z) => {
-  let scale = 10;
+  let scale = 1;
   x = Math.round(x * scale);
   y = Math.round(y * scale);
   z = Math.round(z * scale);
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
 
   remoteX += x;
-  remoteY += z;
+  remoteY += -z;
   remoteX = Math.max(0, Math.min(serverCanvas.width, remoteX));
   remoteY = Math.max(0, Math.min(serverCanvas.height, remoteY));
   let ctx = serverCanvas.getContext('2d');
