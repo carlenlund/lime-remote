@@ -41,6 +41,7 @@ clientPointButtonElement.addEventListener('touchend', () => {
 });
 
 function initClient() {
+  // TODO: Use (absolute) orientation instead, for higher accuracy.
   if ('LinearAccelerationSensor' in window) {
     navigator.permissions.query({name: 'accelerometer'}).then(result => {
       if (result.state != 'granted') {
