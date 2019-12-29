@@ -138,11 +138,6 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('moveRemote', (x, y, z) => {
-  if (Date.now() - stopTime < stopDelay) {
-    velocity = {x: 0, y: 0};
-    acceleration = {x: 0, y: 0};
-    return;
-  }
   let scale = 5;
   acceleration = {x: x * scale, y: -z * scale};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
@@ -160,6 +155,11 @@ function update() {
   let time = Date.now();
   let deltaTime = (time - lastTime) / 1000;
   lastTime = time;
+
+  if (Date.now() - stopTime < stopDelay) {
+    velocity = {x: 0, y: 0};
+    acceleration = {x: 0, y: 0};
+  }
 
   position.x += velocity.x * deltaTime;
   position.y += velocity.y * deltaTime;
