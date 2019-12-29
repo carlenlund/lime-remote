@@ -60,21 +60,8 @@ function initClient() {
 
     gyroscope.start(handleGyroscope);
   }).catch(function(e){
-    log(e);
+    log(`Error: ${e}`);
   });
-}
-
-function startClient() {
-  sensor.addEventListener('reading', e => {
-    if (pointing) {
-    }
-  });
-
-  sensor.addEventListener('error', e => {
-    log(`Error: ${e.error.message}`);
-  });
-
-  sensor.start();
 }
 
 function connectToServer(id) {
@@ -96,9 +83,13 @@ socket.on('serverDisconnected', () => {
 });
 
 function handleGyroscope(sensor) {
-  debugElement.innerHTML =
-      `x: ${sensor.do.alpha}\ny: ${sensor.do.beta}\nz: ${sensor.do.gamma}`;
-  socket.emit('moveRemote', sensor.do.alpha, sensor.do.beta, sensor.do.gamma);
+  let x = sensor.dm.alpha;
+  let y = sensor.dm.beta;
+  let z = sensor.dm.gamma;
+  debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
+  if (pointing) {
+    socket.emit('moveRemote', x, y, z);
+  }
 }
 
 //
