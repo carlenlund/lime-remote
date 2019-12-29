@@ -140,7 +140,6 @@ socket.on('moveRemote', (x, y, z) => {
 });
 
 socket.on('stopRemote', () => {
-  position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
   velocity = {x: 0, y: 0};
   showPointer = false;
   stopTime = Date.now();
@@ -163,10 +162,10 @@ function update() {
   ctx.clearRect(0, 0, serverCanvas.width, serverCanvas.height);
   if (showPointer) {
     ctx.fillStyle = '#000';
-    ctx.fill();
     ctx.beginPath();
     ctx.arc(position.x, position.y, 20, 0, 2 * Math.PI);
     ctx.closePath();
+    ctx.fill();
   }
 }
 
