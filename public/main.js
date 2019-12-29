@@ -110,6 +110,7 @@ var stopDelay = 150;
 var position = {x: 0, y: 0};
 var velocity = {x: 0, y: 0};
 var acceleration = {x: 0, y: 0};
+let pointerSpeed = 50;
 
 let serverButtonElement = document.querySelector('#server-button');
 serverButtonElement.addEventListener('click', () => {
@@ -138,8 +139,7 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('moveRemote', (x, y, z) => {
-  let scale = 5;
-  acceleration = {x: x * scale, y: -z * scale};
+  acceleration = {x: x * pointerSpeed, y: -z * pointerSpeed};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
 });
 
