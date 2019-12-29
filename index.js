@@ -81,7 +81,7 @@ function connectToServer(socket, serverId) {
   server.socket.emit('connectedToClient');
 }
 
-function stopRemote(socket) {
+function startRemote(socket) {
   let server = getClientServer(socket);
   if (server) {
     server.socket.emit('startRemote');
