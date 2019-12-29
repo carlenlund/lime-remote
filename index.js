@@ -75,7 +75,6 @@ function connectToServer(socket, serverId) {
 
 function moveRemote(socket, x, y, z) {
   let server = getClientServer(socket);
-  console.log(server);
   if (server) {
     server.socket.emit('moveRemote', x, y, z);
   }

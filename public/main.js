@@ -105,11 +105,14 @@ socket.on('serverDisconnected', () => {
 // Server code
 //
 
-let remoteX = serverCanvas.width / 2;
-let remoteY = serverCanvas.height / 2;
+var lastTime = 0;
+var position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
+var velocity = {x: 0, y: 0};
+var acceleration = {x: 0, y: 0};
 
 function initServer() {
   socket.emit('createServer');
+  update();
 }
 
 socket.on('serverCreated', (id) => {
@@ -122,22 +125,32 @@ socket.on('connectedToClient', () => {
 
 socket.on('moveRemote', (x, y, z) => {
   let scale = 1;
-  x = Math.round(x * scale);
-  y = Math.round(y * scale);
-  z = Math.round(z * scale);
+  acceleration = {x: x * scale, z: -z * scale};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
+});
 
-  remoteX += x;
-  remoteY += -z;
-  remoteX = Math.max(0, Math.min(serverCanvas.width, remoteX));
-  remoteY = Math.max(0, Math.min(serverCanvas.height, remoteY));
+function update() {
+  requestAnimationFrame(update);
+
+  var time = Date.now();
+  var deltaTime = (time - lastTime) / 1000;
+  lastTime = time;
+
+  position.x += velocity.x * deltaTime;
+  position.y += velocity.y * deltaTime;
+  velocity.x += acceleration.x * deltaTime;
+  velocity.y += acceleration.y * deltaTime;
+
+  position.x = Math.max(0, Math.min(serverCanvas.width, position.x));
+  position.y = Math.max(0, Math.min(serverCanvas.height, position.y));
+
   let ctx = serverCanvas.getContext('2d');
   ctx.fillStyle = '#000';
   ctx.fill();
   ctx.beginPath();
   ctx.arc(remoteX, remoteY, 2, 0, 2 * Math.PI);
   ctx.closePath();
-});
+}
 
 //
 // Shared code
