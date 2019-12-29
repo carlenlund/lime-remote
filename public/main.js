@@ -114,7 +114,6 @@ let serverIdElement = document.querySelector('#server-id');
 let serverCanvas = document.querySelector('#server-canvas');
 serverCanvas.width = 600;
 serverCanvas.height = 400;
-position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
 
 function initServer() {
   socket.emit('createServer');
@@ -130,13 +129,15 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('moveRemote', (x, y, z) => {
+  if (!showPointer) {
+    position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
+  }
   velocity = {x: x * pointerSpeed.x, y: -z * pointerSpeed.y};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
   showPointer = true;
 });
 
 socket.on('stopRemote', () => {
-  position = {x: 0, y: 0};
   velocity = {x: 0, y: 0};
   showPointer = false;
   stopTime = Date.now();
