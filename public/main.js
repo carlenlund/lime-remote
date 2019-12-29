@@ -70,9 +70,7 @@ function startClient() {
   }
 
   sensor.addEventListener('reading', e => {
-    debugElement.innerHTML =
-        `x: ${sensor.x}\ny: ${sensor.y}\nz: ${sensor.z}`;
-
+    debugElement.innerHTML = `x: ${sensor.x}\ny: ${sensor.y}\nz: ${sensor.z}`;
     socket.emit('moveRemote', sensor.x, sensor.y, sensor.z);
   });
 
@@ -125,15 +123,15 @@ socket.on('connectedToClient', () => {
 
 socket.on('moveRemote', (x, y, z) => {
   let scale = 1;
-  acceleration = {x: x * scale, z: -z * scale};
+  acceleration = {x: x * scale, y: -z * scale};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
 });
 
 function update() {
   requestAnimationFrame(update);
 
-  var time = Date.now();
-  var deltaTime = (time - lastTime) / 1000;
+  let time = Date.now();
+  let deltaTime = (time - lastTime) / 1000;
   lastTime = time;
 
   position.x += velocity.x * deltaTime;
