@@ -46,6 +46,10 @@ io.on('connection', socket => {
     moveRemote(socket, x, y, z);
   });
 
+  socket.on('stopRemote', () => {
+    stopRemote(socket);
+  });
+
   // Server
 
   socket.on('createServer', () => {
@@ -54,10 +58,6 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     disconnectServer(socket);
-  });
-
-  socket.on('stopRemote', () => {
-    stopRemote(socket);
   });
 });
 
@@ -84,6 +84,13 @@ function moveRemote(socket, x, y, z) {
   }
 }
 
+function stopRemote(socket) {
+  let serverId = getClientServer(socket);
+  if (server) {
+    server.socket.emit('stopRemote');
+  }
+}
+
 //
 // Server code
 //
@@ -107,15 +114,6 @@ function disconnectServer(socket) {
     server.clientSocket.emit('serverDisconnected');
   }
   delete servers[serverId];
-}
-
-function stopRemote(socket) {
-  let serverId = getServerId(socket);
-  if (!(serverId in servers)) {
-    return;
-  }
-  let server = servers[serverId];
-  server.socket.emit('stopRemote');
 }
 
 //
