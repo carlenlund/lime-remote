@@ -37,7 +37,7 @@ clientPointButtonElement.addEventListener('touchstart', () => {
 });
 clientPointButtonElement.addEventListener('touchend', () => {
   pointing = false;
-  socket.emit('stop-remote');
+  socket.emit('stopRemote');
 });
 
 function initClient() {
