@@ -101,7 +101,7 @@ let stopTime = 0;
 let stopDelay = 150;
 let position = {x: 0, y: 0};
 let velocity = {x: 0, y: 0};
-let pointerSpeed = {x: 9, y: 12};
+let pointerSpeed = {x: 9, y: 10};
 
 let serverButtonElement = document.querySelector('#server-button');
 serverButtonElement.addEventListener('click', () => {
