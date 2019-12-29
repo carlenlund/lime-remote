@@ -170,10 +170,11 @@ function update() {
   position.y = Math.max(0, Math.min(serverCanvas.height, position.y));
 
   let ctx = serverCanvas.getContext('2d');
+  ctx.clearRect(0, 0, serverCanvas.width, serverCanvas.height);
   ctx.fillStyle = '#000';
   ctx.fill();
   ctx.beginPath();
-  ctx.arc(position.x, position.y, 2, 0, 2 * Math.PI);
+  ctx.arc(position.x, position.y, 20, 0, 2 * Math.PI);
   ctx.closePath();
 }
 
