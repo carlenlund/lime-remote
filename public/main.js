@@ -131,7 +131,6 @@ socket.on('connectedToClient', () => {
 
 socket.on('startRemote', () => {
   showPointer = true;
-  position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
 });
 
 socket.on('moveRemote', (x, y, z) => {
@@ -141,6 +140,7 @@ socket.on('moveRemote', (x, y, z) => {
 });
 
 socket.on('stopRemote', () => {
+  position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
   velocity = {x: 0, y: 0};
   showPointer = false;
   stopTime = Date.now();
