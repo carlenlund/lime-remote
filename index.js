@@ -55,6 +55,10 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     disconnectServer(socket);
   });
+
+  socket.on('stop-remote', () => {
+    stopRemote(socket);
+  });
 });
 
 //
@@ -103,6 +107,17 @@ function disconnectServer(socket) {
     server.clientSocket.emit('serverDisconnected');
   }
   delete servers[serverId];
+}
+
+function stopRemote(socket) {
+  let serverId = getServerId(socket);
+  if (!(serverId in servers)) {
+    return;
+  }
+  let server = servers[serverId];
+  if (server.clientSocket) {
+    server.clientSocket.emit('stopRemote');
+  }
 }
 
 //

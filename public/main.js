@@ -37,6 +37,7 @@ clientPointButtonElement.addEventListener('touchstart', () => {
 });
 clientPointButtonElement.addEventListener('touchend', () => {
   pointing = false;
+  socket.emit('stop-remote');
 });
 
 function initClient() {
@@ -135,9 +136,14 @@ socket.on('connectedToClient', () => {
 });
 
 socket.on('moveRemote', (x, y, z) => {
-  let scale = 1;
+  let scale = 5;
   acceleration = {x: x * scale, y: -z * scale};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
+});
+
+socket.on('stopRemote', () => {
+  acceleration = {x: 0, y: 0};
+  velocity = {x: 0, y: 0};
 });
 
 function update() {
