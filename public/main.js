@@ -139,6 +139,8 @@ socket.on('connectedToClient', () => {
 
 socket.on('moveRemote', (x, y, z) => {
   if (Date.now() - stopTime < stopDelay) {
+    velocity = {x: 0, y: 0};
+    acceleration = {x: 0, y: 0};
     return;
   }
   let scale = 5;
