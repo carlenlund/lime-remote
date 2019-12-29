@@ -148,7 +148,7 @@ function update() {
   ctx.fillStyle = '#000';
   ctx.fill();
   ctx.beginPath();
-  ctx.arc(remoteX, remoteY, 2, 0, 2 * Math.PI);
+  ctx.arc(position.x, position.y, 2, 0, 2 * Math.PI);
   ctx.closePath();
 }
 
