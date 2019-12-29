@@ -52,10 +52,10 @@ function initClient() {
   gyroscope.init(args).then(function() {
     let isAvailable = gyroscope.isAvailable();
     if (!isAvailable.deviceOrientationAvailable) {
-      log({message:'Device orientation is not available.'});
+      log('Device orientation is not available.');
     }
     if (!isAvailable.rotationRateAvailable) {
-      log({message:'Device rotation rate is not available.'});
+      log('Device rotation rate is not available.');
     }
 
     gyroscope.start(handleGyroscope);
