@@ -32,10 +32,10 @@ clientConnectButtonElement.addEventListener('click', () => {
 });
 
 let clientPointButtonElement = document.querySelector('#client-point-button');
-clientPointButtonElemen.addEventListener('touchstart', () => {
+clientPointButtonElement.addEventListener('touchstart', () => {
   pointing = true;
 });
-clientPointButtonElemen.addEventListener('touchend', () => {
+clientPointButtonElement.addEventListener('touchend', () => {
   pointing = false;
 });
 
