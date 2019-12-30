@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "description": "Gyroscopic mouse input for desktops",
   "main": "server/index.js",
+  "license": "MIT",
   "scripts": {
     "server": "electron server/",
     "start": "node .",
-    "build": "electron-packager . limeremote --platform=win32 --arch=x64 --overwrite"
+    "build-win64": "electron-packager . limeremote --platform=win32 --arch=x64 --overwrite"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
