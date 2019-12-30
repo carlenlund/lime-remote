@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "Gyroscopic mouse input for desktops",
   "scripts": {
-    "desktop": "electron desktop/"
+    "desktop": "electron desktop/",
+    "start": "node ."
   },
   "dependencies": {
     "body-parser": "^1.19.0",
