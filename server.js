@@ -8,7 +8,7 @@ const io = require('socket.io')(server);
 
 const port = process.env.PORT || 3000;
 
-let servers = {};
+let connections = {};
 
 app.use(express.static(__dirname + '/remote'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,93 +27,94 @@ server.listen(port, () => {
 io.set('origins', '*:*');
 
 io.on('connection', socket => {
-  // Client
+  // Remote
 
-  socket.on('connectToServer', id => {
-    if (!(serverId in servers)) {
-      socket.emit('invalidServerId');
+  socket.on('connectToMachine', machineId => {
+    if (!(machineId in connections)) {
+      socket.emit('invalidMachineId');
       return;
     }
-    let server = servers[serverId];
-    if (server.client) {
-      socket.emit('invalidServerId');
+    let connection = connections[machineId];
+    if (connection.remoteSocket) {
+      socket.emit('invalidMachineId');
       return;
     }
-    server.clientSocket = socket;
-    server.clientSocket.emit('connectedToServer');
-    server.socket.emit('connectedToClient');
+    connection.remoteSocket = socket;
+    connection.remoteSocket.emit('connectedToMachine');
+    connection.machineSocket.emit('connectedToRemote');
   });
 
-  socket.on('disconnectFromServer', id => {
-    if (!(serverId in servers)) {
+  socket.on('disconnectFromMachine', machineId => {
+    if (!(machineId in connections)) {
       return;
     }
-    let server = servers[serverId];
-    server.clientSocket = null;
-    server.socket.emit('disconnectFromClient');
+    let connection = connections[machineId];
+    connection.remoteSocket = null;
+    connection.machineSocket.emit('disconnectFromRemote');
   });
 
   socket.on('startRemote', () => {
-    let server = getClientServer(socket);
-    if (server) {
-      server.socket.emit('startRemote');
+    let connection = getRemoteMachine(socket);
+    if (connection) {
+      connection.machineSocket.emit('startRemote');
     }
   });
 
   socket.on('moveRemote', (x, y, z) => {
-    let server = getClientServer(socket);
-    if (server) {
-      server.socket.emit('moveRemote', x, y, z);
+    let connection = getRemoteMachine(socket);
+    if (connection) {
+      connection.machineSocket.emit('moveRemote', x, y, z);
     }
   });
 
   socket.on('stopRemote', () => {
-    let server = getClientServer(socket);
-    if (server) {
-      server.socket.emit('stopRemote');
+    let connection = getRemoteMachine(socket);
+    if (connection) {
+      connection.machineSocket.emit('stopRemote');
     }
   });
 
   socket.on('clickRemote', () => {
-    let server = getClientServer(socket);
-    if (server) {
-      server.socket.emit('clickRemote');
+    let connection = getRemoteMachine(socket);
+    if (connection) {
+      connection.machineSocket.emit('clickRemote');
     }
   });
 
-  // Server
+  // Machine
 
-  socket.on('createServer', () => {
-    let serverId = getServerId(socket);
-    servers[serverId] = {
-      socket: socket,
-      clientSocket: null,
+  socket.on('createMachine', () => {
+    let machineId = getMachineId(socket);
+    let connection = {
+      machineSocket: socket,
+      remoteSocket: null,
     };
-    socket.emit('serverCreated', serverId);
+    connections[machineId] = connection;
+    connection.machineSocket.emit('machineCreated', machineId);
   });
 
   socket.on('disconnect', () => {
-    let serverId = getServerId(socket);
-    if (!(serverId in servers)) {
+    let machineId = getMachineId(socket);
+    if (!(machineId in connections)) {
       return;
     }
-    let server = servers[serverId];
-    if (server.clientSocket) {
-      server.clientSocket.emit('serverDisconnected');
+    let connections = connections[machineId];
+    if (connections.remoteSocket) {
+      connections.remoteSocket.emit('machineDisconnected');
     }
-    delete servers[serverId];
+    delete connections[machineId];
   });
 });
 
-function getServerId(socket) {
+function getMachineId(socket) {
   return socket.id.substr(0, 5).replace('-', '0').replace('_', '1');
 }
 
-function getClientServer(socket) {
-  for (let serverId in servers) {
-    let server = servers[serverId];
-    if (server.clientSocket && server.clientSocket.id === socket.id) {
-      return server;
+function getRemoteMachine(socket) {
+  for (let machineId in connections) {
+    let connection = connections[machineId];
+    if (connection.remoteSocket && connection.remoteSocket.id === socket.id) {
+      return connection;
     }
   }
   return null;

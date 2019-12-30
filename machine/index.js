@@ -45,7 +45,7 @@ function createWindows() {
   });
 
   mainWindow.webContents.on('did-finish-load', () => {
-    initServer();
+    initMachine();
   });
 
   overlayWindow = new BrowserWindow({
@@ -74,25 +74,29 @@ app.on('activate', () => {
   }
 });
 
-function initServer() {
-  socket.emit('createServer');
+function initMachine() {
+  socket.emit('createMachine');
   update();
 }
 
-socket.on('serverCreated', (id) => {
-  mainWindow.webContents.send('serverCreated', id);
+socket.on('machineCreated', (id) => {
   console.log(id);
+  mainWindow.webContents.send('machineCreated', id);
+  overlayWindow.webContents.send('machineCreated', id);
 });
 
-socket.on('connectedToClient', () => {
-  mainWindow.webContents.send('connectedToClient');
+socket.on('connectedToRemote', () => {
+  mainWindow.webContents.send('connectedToRemote');
+  overlayWindow.webContents.send('connectedToRemote');
 });
 
-socket.on('disconnectFromClient', () => {
-  mainWindow.webContents.send('disconnectFromClient');
+socket.on('disconnectFromRemote', () => {
+  mainWindow.webContents.send('disconnectFromRemote');
+  overlayWindow.webContents.send('disconnectFromRemote');
 });
 socket.on('disconnect', () => {
-  mainWindow.webContents.send('disconnectFromClient');
+  mainWindow.webContents.send('disconnectFromRemote');
+  overlayWindow.webContents.send('disconnectFromRemote');
 });
 
 socket.on('startRemote', () => {

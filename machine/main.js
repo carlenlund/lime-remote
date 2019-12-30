@@ -8,12 +8,12 @@ ipcRenderer.on('serverCreated', (e, id) => {
   serverIdElement.innerHTML = id;
 });
 
-ipcRenderer.on('connectedToClient', (e) => {
-  log('Connected to client');
+ipcRenderer.on('connectedToRemote', (e) => {
+  log('Connected to remote');
 });
 
-ipcRenderer.on('disconnectFromClient', (e) => {
-  log('Disconnected from client');
+ipcRenderer.on('disconnectFromRemote', (e) => {
+  log('Disconnected from remote');
 });
 
 ipcRenderer.on('startRemote', (e) => {

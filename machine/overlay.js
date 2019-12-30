@@ -11,7 +11,10 @@ let screenSize = robot.getScreenSize();
 canvas.width = screenSize.width;
 canvas.height = screenSize.height;
 
-ipcRenderer.on('disconnectFromClient', (e) => {
+ipcRenderer.on('connectedToRemote', (e) => {
+});
+
+ipcRenderer.on('disconnectFromRemote', (e) => {
   showPointer = false;
 });
 

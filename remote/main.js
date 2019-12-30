@@ -1,47 +1,47 @@
 const socket = io();
 
-let connectedToServer = false;
-let clientServerId = null;
+let connectedToMachine = false;
+let machineId = null;
 let pointing = false;
 
 let gyroscope = null;
 
 let connectFormElement = document.querySelector('#connect-form');
 connectFormElement.addEventListener('submit', e => {
-  connectToServer(clientServerIdInputElement.value);
+  connectToMachine(machineIdInputElement.value);
   e.preventDefault();
   e.stopPropagation();
   return false;
 });
 
-let clientServerIdInputElement = document.querySelector('#client-server-id-input');
-let clientConnectButtonElement =
-    document.querySelector('#client-connect-button');
+let machineIdInputElement = document.querySelector('#machine-id-input');
+let connectButtonElement =
+    document.querySelector('#connect-button');
 
 let connectionElement = document.querySelector('#connection');
 connectionElement.style.display = 'none';
-let clientServerIdElement = document.querySelector('#client-server-id');
-let clientDisconnectButtonElement =
-    document.querySelector('#client-disconnect-button');
-clientDisconnectButtonElement.addEventListener('click', () => {
-  socket.emit('disconnectFromServer');
+let machineIdElement = document.querySelector('#machine-id');
+let disconnectButtonElement =
+    document.querySelector('#disconnect-button');
+disconnectButtonElement.addEventListener('click', () => {
+  socket.emit('disconnectFromMachine');
   connectionElement.style.display = 'none';
   connectFormElement.style.display = 'block';
 });
 
-let clientPointButtonElement = document.querySelector('#client-point-button');
+let pointButtonElement = document.querySelector('#point-button');
 let buttonClickTime = 0;
 let clickTime = 500;
-clientPointButtonElement.addEventListener('touchstart', () => {
+pointButtonElement.addEventListener('touchstart', () => {
   pointing = true;
   socket.emit('startRemote');
-  clientPointButtonElement.classList.add('point-button--active');
+  pointButtonElement.classList.add('point-button--active');
   buttonClickTime = Date.now();
 });
-clientPointButtonElement.addEventListener('touchend', () => {
+pointButtonElement.addEventListener('touchend', () => {
   pointing = false;
   socket.emit('stopRemote');
-  clientPointButtonElement.classList.remove('point-button--active');
+  pointButtonElement.classList.remove('point-button--active');
   if (Date.now() - buttonClickTime < clickTime) {
     socket.emit('clickRemote');
   }
@@ -87,24 +87,24 @@ async function requestSensorPermissions() {
     });
 }
 
-function connectToServer(id) {
-  clientServerId = id;
-  socket.emit('connectToServer', id);
+function connectToMachine(id) {
+  machineId = id;
+  socket.emit('connectToMachine', id);
 }
 
-socket.on('connectedToServer', () => {
-  clientServerIdElement.innerHTML =
-      `Connected to <code class="code">${clientServerId}</code>`;
+socket.on('connectedToMachine', () => {
+  machineIdElement.innerHTML =
+      `Connected to <code class="code">${machineId}</code>`;
   connectFormElement.style.display = 'none';
   connectionElement.style.display = 'block';
-  clientServerIdInputElement.value = '';
+  machineIdInputElement.value = '';
 });
 
-socket.on('invalidServerId', () => {
-  alert(`Invalid server ID "${clientServerId}"`);
+socket.on('invalidMachineId', () => {
+  alert(`Invalid machine ID "${machineId}"`);
 });
 
-socket.on('serverDisconnected', () => {
+socket.on('machineDisconnected', () => {
   disconnected();
 });
 socket.on('disconnect', () => {
@@ -112,7 +112,7 @@ socket.on('disconnect', () => {
 });
 
 function disconnected() {
-  alert('Disconnected from server');
+  alert('Disconnected from machine');
   connectionElement.style.display = 'none';
   connectFormElement.style.display = 'block';
 }
