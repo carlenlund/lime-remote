@@ -44,11 +44,11 @@ io.on('connection', socket => {
     connection.machineSocket.emit('connectedToRemote');
   });
 
-  socket.on('disconnectFromMachine', machineId => {
-    if (!(machineId in connections)) {
+  socket.on('disconnectFromMachine', () => {
+    let connection = getRemoteMachine(socket);
+    if (!connection) {
       return;
     }
-    let connection = connections[machineId];
     connection.remoteSocket = null;
     connection.machineSocket.emit('disconnectFromRemote');
   });
