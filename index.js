@@ -4,7 +4,6 @@ const http = require('http');
 const server = http.createServer(app);
 const bodyParser = require('body-parser');
 const featurePolicy = require('feature-policy');
-const sslRedirect = require('heroku-ssl-redirect');
 const io = require('socket.io')(server);
 
 const port = process.env.PORT || 3000;
@@ -21,7 +20,11 @@ app.use(featurePolicy({
   },
 }));
 
-app.use(sslRedirect());
+app.get('*', function(request, response) {  
+  if (!request.secure) {
+    res.redirect('https://limeremote.herokuapp.com' + request.url);
+  }
+});
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}...`);
