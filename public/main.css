@@ -30,7 +30,7 @@ input {
   height: 100%;
 }
 
-.connection p {
+.connection .code {
   padding: 6px;
 }
 
