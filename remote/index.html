@@ -8,7 +8,8 @@
   <script>
     // HTTPS is sometimes not default for Heroku. Setting up redirection
     // through Express did not work.
-    if (location.hostname.endsWith('herokuapp.com')) {
+    if (location.protocol === 'http:' &&
+        location.hostname.endsWith('herokuapp.com')) {
       location.protocol = "https:";
     }
   </script>
