@@ -58,12 +58,14 @@ function update() {
     ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = 'rgba(0,0,0,.7)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillstyle = '#000';
+
+    ctx.save();
     ctx.beginPath();
     ctx.arc(position.x, position.y, pointerRadius, 0, 2 * Math.PI);
-    ctx.closePath();
-    ctx.fill();
+    ctx.clip();
+    ctx.clearRect(position.x - pointerRadius, position.y - pointerRadius,
+                  2 * pointerRadius, 2 * pointerRadius);
+    ctx.restore();
   }
 
   setTimeout(update, 1000 / 30);
