@@ -1,57 +1,49 @@
-const socket = io('https://limeremote.herokuapp.com');
-
 let debugElement = document.querySelector('#debug');
 let logElement = document.querySelector('#log');
 
 let lastTime = 0;
-let stopTime = 0;
-let position = {x: 0, y: 0};
+let currentPosition = robot.getMousePos();
+let position = {x: currentPosition.x, y: currentPosition.y};
 let velocity = {x: 0, y: 0};
-let pointerSpeed = {x: 9, y: 10};
+let pointerSpeed = {x: 12, y: 13};
 let showPointer = false;
 
 let serverButtonElement = document.querySelector('#server-button');
 let serverIdElement = document.querySelector('#server-id');
 
 let serverCanvas = document.querySelector('#server-canvas');
-serverCanvas.width = 600;
-serverCanvas.height = 400;
+let screenSize = robot.getScreenSize();
+serverCanvas.width = screenSize.width;
+serverCanvas.height = screenSize.height;
 
-initServer();
-
-function initServer() {
-  socket.emit('createServer');
-  update();
-}
-
-socket.on('serverCreated', (id) => {
+ipcRenderer.on('serverCreated', (e, id) => {
+  console.log(id);
   serverIdElement.innerHTML = id;
 });
 
-socket.on('connectedToClient', () => {
+ipcRenderer.on('connectedToClient', (e) => {
   log('Connected to client');
 });
 
-socket.on('startRemote', () => {
-  position = {x: serverCanvas.width / 2, y: serverCanvas.height / 2};
-  showPointer = true;
+ipcRenderer.on('startRemote', (e) => {
+  let currentPosition = robot.getMousePos();
+  position = {x: currentPosition.x, y: currentPosition.y};
 });
 
-socket.on('moveRemote', (x, y, z) => {
+ipcRenderer.on('moveRemote', (e, x, y, z) => {
   velocity = {x: x * pointerSpeed.x, y: -z * pointerSpeed.y};
   debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
   showPointer = true;
 });
 
-socket.on('stopRemote', () => {
+ipcRenderer.on('stopRemote', (e) => {
   velocity = {x: 0, y: 0};
   showPointer = false;
-  stopTime = Date.now();
 });
 
-function update() {
-  requestAnimationFrame(update);
+update();
 
+function update() {
   let time = Date.now();
   let deltaTime = (time - lastTime) / 1000;
   lastTime = time;
@@ -59,8 +51,11 @@ function update() {
   position.x += velocity.x * deltaTime;
   position.y += velocity.y * deltaTime;
 
-  position.x = Math.max(0, Math.min(serverCanvas.width, position.x));
-  position.y = Math.max(0, Math.min(serverCanvas.height, position.y));
+  let screenSize = robot.getScreenSize();
+  let screenWidth = screenSize.width;
+  let screenHeight = screenSize.height;
+  position.x = Math.max(0, Math.min(screenWidth, position.x));
+  position.y = Math.max(0, Math.min(screenHeight, position.y));
 
   let ctx = serverCanvas.getContext('2d');
   ctx.clearRect(0, 0, serverCanvas.width, serverCanvas.height);
@@ -71,6 +66,8 @@ function update() {
     ctx.closePath();
     ctx.fill();
   }
+
+  setTimeout(update, 1000 / 60);
 }
 
 //

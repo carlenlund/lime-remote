@@ -56,6 +56,10 @@ io.on('connection', socket => {
     stopRemote(socket);
   });
 
+  socket.on('clickRemote', () => {
+    clickRemote(socket);
+  });
+
   // Server
 
   socket.on('createServer', () => {
@@ -101,6 +105,13 @@ function stopRemote(socket) {
   let server = getClientServer(socket);
   if (server) {
     server.socket.emit('stopRemote');
+  }
+}
+
+function clickRemote(socket) {
+  let server = getClientServer(socket);
+  if (server) {
+    server.socket.emit('clickRemote');
   }
 }
 

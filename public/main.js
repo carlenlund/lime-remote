@@ -17,15 +17,21 @@ clientConnectButtonElement.addEventListener('click', () => {
 });
 
 let clientPointButtonElement = document.querySelector('#client-point-button');
+let buttonClickTime = 0;
+let clickTime = 500;
 clientPointButtonElement.addEventListener('touchstart', () => {
   pointing = true;
   socket.emit('startRemote');
   clientPointButtonElement.classList.add('point-button--active');
+  buttonClickTime = Date.now();
 });
 clientPointButtonElement.addEventListener('touchend', () => {
   pointing = false;
   socket.emit('stopRemote');
   clientPointButtonElement.classList.remove('point-button--active');
+  if (Date.now() - buttonClickTime < clickTime) {
+    socket.emit('clickRemote');
+  }
 });
 
 initClient();
