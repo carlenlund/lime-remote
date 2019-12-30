@@ -27,7 +27,7 @@ function createWindows() {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  if (isDev) {
+  if (!isDev) {
     mainWindow.removeMenu();
   }
 

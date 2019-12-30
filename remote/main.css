@@ -64,7 +64,8 @@ input {
 }
 
 .button {
-  background: #c8c8c8;
+  /* background: #c8c8c8; */
+  background: #bf4;
   border-radius: 3px;
   color: #000;
   cursor: pointer;
