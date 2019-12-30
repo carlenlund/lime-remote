@@ -2,6 +2,7 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const robot = require('robotjs');
 const io = require('socket.io-client');
+const isDev = require('electron-is-dev');
 
 const socket = io('https://limeremote.herokuapp.com');
 
@@ -26,7 +27,7 @@ function createWindows() {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  if (process.env.NODE_ENV === 'production') {
+  if (isDev) {
     mainWindow.removeMenu();
   }
 
