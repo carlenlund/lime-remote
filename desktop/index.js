@@ -90,6 +90,10 @@ socket.on('connectedToClient', () => {
   mainWindow.webContents.send('connectedToClient');
 });
 
+socket.on('disconnectFromClient', () => {
+  mainWindow.webContents.send('disconnectFromClient');
+});
+
 socket.on('startRemote', () => {
   let currentPosition = robot.getMousePos();
   position = {x: currentPosition.x, y: currentPosition.y};

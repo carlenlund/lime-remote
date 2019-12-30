@@ -33,6 +33,10 @@ io.on('connection', socket => {
     connectToServer(socket, id);
   });
 
+  socket.on('disconnectFromServer', id => {
+    disconnectFromServer(socket, id);
+  });
+
   socket.on('startRemote', () => {
     startRemote(socket);
   });
@@ -69,11 +73,23 @@ function connectToServer(socket, serverId) {
     socket.emit('invalidServerId');
     return;
   }
-
   let server = servers[serverId];
+  if (server.client) {
+    socket.emit('invalidServerId');
+    return;
+  }
   server.clientSocket = socket;
   server.clientSocket.emit('connectedToServer');
   server.socket.emit('connectedToClient');
+}
+
+function disconnectFromServer(socket, serverId) {
+  if (!(serverId in servers)) {
+    return;
+  }
+  let server = servers[serverId];
+  server.clientSocket = null;
+  server.socket.emit('disconnectFromClient');
 }
 
 function startRemote(socket) {

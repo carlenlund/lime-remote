@@ -16,11 +16,14 @@
   <div id="client" class="client">
     <div class="controls">
       <form id="connect-form">
-        <input id="client-server-id" type="text" class="input">
-        <button id="client-connect-button" class="button">Connect</button>
+        <div class="input-group">
+          <input id="client-server-id-input" type="text" class="input">
+          <button id="client-connect-button" class="button button--right">Connect</button>
+        </div>
       </form>
       <div id="connection">
-        <button id="client-connect-button" class="button">Disconnect</button>
+        <code id="client-server-id-input" class="code"></code>
+        <button id="client-disconnect-button" class="button button--small button--right">Disconnect</button>
       </div>
       <button id="client-point-button" class="button button--primary point-button">Point</button>
       <div>

@@ -20,6 +20,10 @@ ipcRenderer.on('connectedToClient', (e) => {
   log('Connected to client');
 });
 
+ipcRenderer.on('disconnectFromClient', (e) => {
+  log('Disconnected from client');
+});
+
 ipcRenderer.on('startRemote', (e) => {
   let currentPosition = robot.getMousePos();
   position = {x: currentPosition.x, y: currentPosition.y};

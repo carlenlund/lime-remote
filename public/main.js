@@ -8,16 +8,22 @@ let gyroscope = null;
 
 let connectFormElement = document.querySelector('#connect-form');
 connectFormElement.addEventListener('submit', e => {
-  connectToServer(clientServerIdElement.value);
+  connectToServer(clientServerIdInputElement.value);
   e.preventDefault();
 });
 
-let clientServerIdElement = document.querySelector('#client-server-id');
+let clientServerIdInputElement = document.querySelector('#client-server-id');
 let clientConnectButtonElement =
     document.querySelector('#client-connect-button');
 
 let connectionElement = document.querySelector('#connection');
 connectionElement.style.display = 'none';
+let clientServerIdElement = document.querySelector('#client-server-id');
+let clientDisconnectButtonElement =
+    document.querySelector('#client-connect-button');
+clientDisconnectButtonElement.addEventListener('click', () => {
+  socket.emit('disconnectFromServer');
+});
 
 let clientPointButtonElement = document.querySelector('#client-point-button');
 let buttonClickTime = 0;
@@ -81,7 +87,8 @@ function connectToServer(id) {
 }
 
 socket.on('connectedToServer', () => {
-  clientServerIdElement.innerHTML = clientServerId;
+  clientServerIdElement.innerHTML =
+      `Connected to <code class="code">${clientServerId}</code>`;
   connectFormElement.style.display = 'none';
   connectionElement.style.display = 'block';
 });

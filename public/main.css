@@ -30,24 +30,40 @@ input {
   height: 100%;
 }
 
-#connect-form {
+.connection p {
+  padding: 6px;
+}
+
+.input-group {
   display: flex;
   align-items: stretch;
   flex-flow: row;
 }
 
-#client-server-id {
+.input-group .input {
   flex: 1;
+}
+
+.input-group :not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group :not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .input {
   background: #fff;
-  padding: 6px;
-  /* max-width: 100%; */
+  border-radius: 3px;
+  font-family: 'Consolas', monospace;
+  padding: 6px 10px;
 }
 
 .button {
-  background: #bbb;
+  background: #c8c8c8;
+  border-radius: 3px;
   color: #000;
   cursor: pointer;
   outline: none;
@@ -56,14 +72,29 @@ input {
 
 .button--primary {
   background: #bf4;
+  color: #000;
+}
+
+.button--small {
+  background: none;
+  color: #bf4;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.button--right {
+  float: right;
 }
 
 .controls {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   height: 100%;
+}
+
+.code {
+  font-family: 'Consolas', monospace;
 }
 
 .point-button {

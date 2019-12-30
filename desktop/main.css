@@ -44,6 +44,9 @@ input {
 
 .code {
   font-family: 'Consolas', monospace;
+}
+
+.green {
   color: #bf4;
 }
 
