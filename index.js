@@ -21,9 +21,9 @@ app.use(featurePolicy({
 }));
 
 
-app.use((req, res, next) => {
-  if (!req.secure) {
-    return res.redirect('https://' + req.get('host') + req.url);
+app.use((request, response, next) => {
+  if (!request.secure) {
+    response.redirect('https://' + request.readers.host + request.url);
   }
   next();
 });
