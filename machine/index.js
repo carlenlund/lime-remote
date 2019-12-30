@@ -13,7 +13,7 @@ let lastTime = 0;
 let currentPosition = robot.getMousePos();
 let position = {x: currentPosition.x, y: currentPosition.y};
 let velocity = {x: 0, y: 0};
-let pointerSpeed = {x: 12, y: 13};
+let pointerSpeed = {x: 15, y: 15};
 
 app.on('ready', () => {
   createWindows();
