@@ -11,10 +11,11 @@ body {
 }
 
 body {
-  background: #222;
+  background: #181818;
   color: #fff;
   font-family: 'Arial', sans-serif;
   font-size: 14px;
+  line-height: 18px;
   padding: 8px;
 }
 
@@ -41,35 +42,10 @@ input {
   background: #bf4;
 }
 
-.client {
-  height: 100%;
-}
-
-.controls {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  height: 100%;
-}
-
-.point-button {
-  border-radius: 100px;
-  display: block;
-  height: 100px;
-  margin: 0 auto;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  width: 100px;
-}
-
-.point-button--active {
-  background: #000;
-  color: #fff;
-}
-
-.server-id {
+.code {
   font-family: 'Consolas', monospace;
+  /* text-decoration: underline; */
+  color: #bf4;
 }
 
 .server-canvas {

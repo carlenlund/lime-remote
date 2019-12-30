@@ -59,7 +59,7 @@ function update() {
     ctx.fill();
   }
 
-  setTimeout(update, 1000 / 60);
+  setTimeout(update, 1000 / 30);
 }
 
 //

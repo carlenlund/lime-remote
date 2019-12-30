@@ -16,8 +16,8 @@ let pointerSpeed = {x: 12, y: 13};
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 400,
+    height: 400,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },

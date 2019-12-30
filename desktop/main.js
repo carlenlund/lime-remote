@@ -11,11 +11,6 @@ let showPointer = false;
 let serverButtonElement = document.querySelector('#server-button');
 let serverIdElement = document.querySelector('#server-id');
 
-let serverCanvas = document.querySelector('#server-canvas');
-let screenSize = robot.getScreenSize();
-serverCanvas.width = screenSize.width;
-serverCanvas.height = screenSize.height;
-
 ipcRenderer.on('serverCreated', (e, id) => {
   console.log(id);
   serverIdElement.innerHTML = id;
@@ -59,16 +54,6 @@ function update() {
   let screenHeight = screenSize.height;
   position.x = Math.max(0, Math.min(screenWidth, position.x));
   position.y = Math.max(0, Math.min(screenHeight, position.y));
-
-  let ctx = serverCanvas.getContext('2d');
-  ctx.clearRect(0, 0, serverCanvas.width, serverCanvas.height);
-  if (showPointer) {
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.arc(position.x, position.y, 20, 0, 2 * Math.PI);
-    ctx.closePath();
-    ctx.fill();
-  }
 
   setTimeout(update, 1000 / 60);
 }
