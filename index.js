@@ -4,7 +4,7 @@ const http = require('http');
 const server = http.createServer(app);
 const bodyParser = require('body-parser');
 const featurePolicy = require('feature-policy');
-const sslify = require('express-sslify');
+const sslRedirect = require('heroku-ssl-redirect');
 const io = require('socket.io')(server);
 
 const port = process.env.PORT || 3000;
@@ -21,7 +21,7 @@ app.use(featurePolicy({
   },
 }));
 
-app.use(sslify.HTTPS({ trustProtoHeader: true }))
+app.use(sslRedirect());
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}...`);
