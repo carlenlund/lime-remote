@@ -15,6 +15,10 @@ let velocity = {x: 0, y: 0};
 let pointerSpeed = {x: 12, y: 13};
 
 app.on('ready', () => {
+  createWindows();
+});
+
+function createWindows() {
   mainWindow = new BrowserWindow({
     width: 400,
     height: 400,
@@ -22,13 +26,21 @@ app.on('ready', () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  mainWindow.removeMenu();
+  if (process.env.NODE_ENV === 'production') {
+    mainWindow.removeMenu();
+  }
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   mainWindow.on('closed', () => {
-    mainWindow = null;
-    overlayWindow = null;
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform === 'darwin') {
+      mainWindow = null;
+      overlayWindow.close();
+      overlayWindow = null;
+      return;
+    }
     app.quit();
   });
 
@@ -51,29 +63,14 @@ app.on('ready', () => {
 
   overlayWindow.loadFile(path.join(__dirname, 'overlay.html'));
 
-  overlayWindow.on('closed', () => {
-    mainWindow = null;
-    overlayWindow = null;
-    app.quit();
-  });
-
   mainWindow.focus();
-});
-
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + 
-  if (process.platform === 'darwin') {
-    return;
-  }
-  app.quit();
-});
+}
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow();
+  if (!mainWindow) {
+    createWindows();
   }
 });
 

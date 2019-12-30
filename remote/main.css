@@ -103,6 +103,10 @@ input {
   font-family: 'Consolas', monospace;
 }
 
+.green {
+  color: #bf4;
+}
+
 .point-button {
   border-radius: 100px;
   display: block;
@@ -116,4 +120,13 @@ input {
 .point-button--active {
   background: #000;
   color: #fff;
+}
+
+.overlay {
+  background: none;
+  padding: 0;
+}
+
+.overlay-canvas {
+  width: 100%;
 }
