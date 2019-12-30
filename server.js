@@ -98,9 +98,9 @@ io.on('connection', socket => {
     if (!(machineId in connections)) {
       return;
     }
-    let connections = connections[machineId];
-    if (connections.remoteSocket) {
-      connections.remoteSocket.emit('machineDisconnected');
+    let connection = connections[machineId];
+    if (connection.remoteSocket) {
+      connection.remoteSocket.emit('machineDisconnected');
     }
     delete connections[machineId];
   });
