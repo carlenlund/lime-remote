@@ -6,8 +6,9 @@
   <title>Lime Remote</title>
   <link rel="stylesheet" href="main.css">
   <script>
-    if (location.protocol !== "https:" &&
-        location.hostname !== 'localhost') {
+    // HTTPS is sometimes not default for Heroku. Setting up redirection
+    // through Express did not work.
+    if (location.hostname.endsWith('herokuapp.com')) {
       location.protocol = "https:";
     }
   </script>

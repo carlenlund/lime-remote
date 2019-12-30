@@ -1,10 +1,12 @@
+const config = require('../config.json');
+
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const robot = require('robotjs');
 const io = require('socket.io-client');
 const isDev = require('electron-is-dev');
 
-const socket = io('https://limeremote.herokuapp.com');
+const socket = io(config.host);
 
 let mainWindow = null;
 let overlayWindow = null;
