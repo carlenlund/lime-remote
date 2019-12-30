@@ -100,10 +100,17 @@ socket.on('invalidServerId', () => {
 });
 
 socket.on('serverDisconnected', () => {
+  disconnected();
+});
+socket.on('disconnect', () => {
+  disconnected();
+});
+
+function disconnected() {
   alert('Disconnected from server');
   connectionElement.style.display = 'none';
   connectFormElement.style.display = 'block';
-});
+}
 
 function handleGyroscope(event) {
   let x = -event.dm.gamma;
