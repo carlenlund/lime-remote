@@ -5,7 +5,7 @@ A handy tool during presentations and in times where you can't reach your comput
 
 Lime Remote is inspired by Logitech's [Spotlight Presentation Remote](https://www.logitech.com/en-us/product/spotlight-presentation-remote).
 
-![](https://i.imgur.com/lUUJ9rR.gif)
+![](Lime_Remote.gif)
 
 ## Download
 
