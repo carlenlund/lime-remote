@@ -31,7 +31,7 @@ input {
 }
 
 .connection .code {
-  padding: 6px;
+  padding: 6px 0;
 }
 
 .input-group {
@@ -82,7 +82,11 @@ input {
   padding-right: 0;
 }
 
-.button--right {
+.left {
+  float: left;
+}
+
+.right {
   float: right;
 }
 
