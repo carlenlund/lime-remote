@@ -30,18 +30,20 @@ input {
   height: 100%;
 }
 
-.connection .code {
-  padding: 6px 0;
-}
-
 .input-group {
   display: flex;
   align-items: stretch;
   flex-flow: row;
+  justify-content: space-between;
 }
 
 .input-group .input {
   flex: 1;
+}
+
+.input-group * {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .input-group :not(:last-child) {
