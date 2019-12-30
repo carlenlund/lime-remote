@@ -14,7 +14,7 @@ connectFormElement.addEventListener('submit', e => {
   return false;
 });
 
-let clientServerIdInputElement = document.querySelector('#client-server-id');
+let clientServerIdInputElement = document.querySelector('#client-server-id-input');
 let clientConnectButtonElement =
     document.querySelector('#client-connect-button');
 
