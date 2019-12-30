@@ -93,6 +93,7 @@ socket.on('connectedToServer', () => {
       `Connected to <code class="code">${clientServerId}</code>`;
   connectFormElement.style.display = 'none';
   connectionElement.style.display = 'block';
+  clientServerIdInputElement.value = '';
 });
 
 socket.on('invalidServerId', () => {
