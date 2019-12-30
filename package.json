@@ -12,6 +12,7 @@
     "build-win64": "electron-packager . limeremote --platform=win32 --arch=x64 --overwrite",
     "build-win32": "electron-packager . limeremote --platform=win32 --arch=ia32 --overwrite"
   },
+  "heroku-run-build-script": false,
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
