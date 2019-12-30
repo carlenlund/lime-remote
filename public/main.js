@@ -10,6 +10,7 @@ let connectFormElement = document.querySelector('#connect-form');
 connectFormElement.addEventListener('submit', e => {
   connectToServer(clientServerIdInputElement.value);
   e.preventDefault();
+  return false;
 });
 
 let clientServerIdInputElement = document.querySelector('#client-server-id');
