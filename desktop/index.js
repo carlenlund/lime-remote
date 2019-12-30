@@ -6,6 +6,7 @@ const io = require('socket.io-client');
 const socket = io('https://limeremote.herokuapp.com');
 
 let mainWindow = null;
+let overlayWindow = null;
 
 let lastTime = 0;
 let currentPosition = robot.getMousePos();
@@ -20,16 +21,39 @@ app.on('ready', () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
-  })
+  });
 
   mainWindow.loadFile('index.html');
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+    overlayWindow = null;
+    app.quit();
   });
 
   mainWindow.webContents.on('did-finish-load', () => {
     initServer();
+  });
+
+  overlayWindow = new BrowserWindow({
+    frame: false,
+    transparent: true,
+    resizable: false,
+    fullscreen: true,
+    skipTaskbar: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+    },
+  });
+  overlayWindow.setIgnoreMouseEvents(true);
+  overlayWindow.setAlwaysOnTop(true, 'screen');
+
+  overlayWindow.loadFile('overlay.html');
+
+  overlayWindow.on('closed', () => {
+    mainWindow = null;
+    overlayWindow = null;
+    app.quit();
   });
 });
 
@@ -68,20 +92,25 @@ socket.on('startRemote', () => {
   let currentPosition = robot.getMousePos();
   position = {x: currentPosition.x, y: currentPosition.y};
   mainWindow.webContents.send('startRemote');
+  overlayWindow.webContents.send('startRemote');
 });
 
 socket.on('moveRemote', (x, y, z) => {
   velocity = {x: x * pointerSpeed.x, y: -z * pointerSpeed.y};
   mainWindow.webContents.send('moveRemote', x, y, z);
+  overlayWindow.webContents.send('moveRemote', x, y, z);
 });
 
 socket.on('stopRemote', () => {
-  mainWindow.webContents.send('stopRemote');
   velocity = {x: 0, y: 0};
+  mainWindow.webContents.send('stopRemote');
+  overlayWindow.webContents.send('stopRemote');
 });
 
 socket.on('clickRemote', () => {
   robot.mouseClick('left');
+  mainWindow.webContents.send('clickRemote');
+  overlayWindow.webContents.send('clickRemote');
 });
 
 update();

@@ -134,7 +134,7 @@ function disconnectServer(socket) {
 //
 
 function getServerId(socket) {
-  return socket.id.substr(0, 4).replace('-', '0').replace('_', '1');
+  return socket.id.substr(0, 5).replace('-', '0').replace('_', '1');
 }
 
 function getClientServer(socket) {

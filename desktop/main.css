@@ -72,7 +72,16 @@ input {
   font-family: 'Consolas', monospace;
 }
 
-canvas {
+.server-canvas {
   background: #fff;
+  width: 100%;
+}
+
+.overlay {
+  background: none;
+  padding: 0;
+}
+
+.overlay-canvas {
   width: 100%;
 }

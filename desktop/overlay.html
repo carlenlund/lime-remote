@@ -7,22 +7,12 @@
         content="default-src 'self'; script-src 'self'; connect-src *">
   <meta http-equiv="X-Content-Security-Policy"
         content="default-src 'self'; script-src 'self'; connect-src *">
-  <title>Lime Remote</title>
+  <title>Overlay</title>
   <link rel="stylesheet" href="main.css">
 </head>
-<body>
-  <p id="ip"></p>
+<body class="overlay">
+  <canvas id="overlay-canvas" class="overlay-canvas"></canvas>
 
-  <div id="server" class="server">
-    <p>Server ID</p>
-    <p id="server-id" class="server-id"></p>
-    <p>Remember to use https in the client address.</p>
-    <canvas id="server-canvas" class="server-canvas"></canvas>
-  </div>
-
-  <pre id="debug"></pre>
-  <pre id="log"></pre>
-
-  <script src="main.js"></script>
+  <script src="overlay.js"></script>
 </body>
 </html>
