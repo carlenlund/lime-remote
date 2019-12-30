@@ -16,7 +16,7 @@ body {
   font-family: 'Arial', sans-serif;
   font-size: 14px;
   line-height: 18px;
-  padding: 8px;
+  padding: 16px;
 }
 
 button,
@@ -31,7 +31,7 @@ input {
 }
 
 .button {
-  background: #ddd;
+  background: #ccc;
   color: #000;
   cursor: pointer;
   outline: none;
@@ -44,7 +44,6 @@ input {
 
 .code {
   font-family: 'Consolas', monospace;
-  /* text-decoration: underline; */
   color: #bf4;
 }
 

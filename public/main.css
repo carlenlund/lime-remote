@@ -15,7 +15,7 @@ body {
   color: #fff;
   font-family: 'Arial', sans-serif;
   font-size: 14px;
-  padding: 8px;
+  padding: 16px;
 }
 
 button,
@@ -24,25 +24,38 @@ input {
   background: none;
 }
 
+.client {
+  margin: 0 auto;
+  max-width: 400px;
+  height: 100%;
+}
+
+#connect-form {
+  display: flex;
+  align-items: stretch;
+  flex-flow: row;
+}
+
+#client-server-id {
+  flex: 1;
+}
+
 .input {
   background: #fff;
   padding: 6px;
+  /* max-width: 100%; */
 }
 
 .button {
-  background: #ddd;
+  background: #bbb;
   color: #000;
   cursor: pointer;
   outline: none;
-  padding: 6px;
+  padding: 6px 10px;
 }
 
 .button--primary {
   background: #bf4;
-}
-
-.client {
-  height: 100%;
 }
 
 .controls {
@@ -66,13 +79,4 @@ input {
 .point-button--active {
   background: #000;
   color: #fff;
-}
-
-.server-id {
-  font-family: 'Consolas', monospace;
-}
-
-canvas {
-  background: #fff;
-  width: 100%;
 }

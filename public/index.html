@@ -15,18 +15,18 @@
 <body>
   <div id="client" class="client">
     <div class="controls">
-      <div>
+      <form id="connect-form">
         <input id="client-server-id" type="text" class="input">
         <button id="client-connect-button" class="button">Connect</button>
+      </form>
+      <div id="connection">
+        <button id="client-connect-button" class="button">Disconnect</button>
       </div>
       <button id="client-point-button" class="button button--primary point-button">Point</button>
       <div>
       </div>
     </div>
   </div>
-
-  <pre id="debug"></pre>
-  <pre id="log"></pre>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="gyronorm.complete.min.js"></script>

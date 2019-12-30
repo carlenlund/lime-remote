@@ -55,6 +55,8 @@ app.on('ready', () => {
     overlayWindow = null;
     app.quit();
   });
+
+  mainWindow.focus();
 });
 
 app.on('window-all-closed', () => {

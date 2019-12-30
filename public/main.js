@@ -1,20 +1,23 @@
 const socket = io();
 
-let debugElement = document.querySelector('#debug');
-let logElement = document.querySelector('#log');
-
 let connectedToServer = false;
 let clientServerId = null;
 let pointing = false;
 
 let gyroscope = null;
 
+let connectFormElement = document.querySelector('#connect-form');
+connectFormElement.addEventListener('submit', e => {
+  connectToServer(clientServerIdElement.value);
+  e.preventDefault();
+});
+
 let clientServerIdElement = document.querySelector('#client-server-id');
 let clientConnectButtonElement =
     document.querySelector('#client-connect-button');
-clientConnectButtonElement.addEventListener('click', () => {
-  connectToServer(clientServerIdElement.value);
-});
+
+let connectionElement = document.querySelector('#connection');
+connectionElement.style.display = 'none';
 
 let clientPointButtonElement = document.querySelector('#client-point-button');
 let buttonClickTime = 0;
@@ -47,16 +50,15 @@ function initClient() {
   };
   gyroscope.init(args).then(function() {
     let isAvailable = gyroscope.isAvailable();
-    if (!isAvailable.deviceOrientationAvailable) {
-      log('Device orientation is not available.');
-    }
-    if (!isAvailable.rotationRateAvailable) {
-      log('Device rotation rate is not available.');
+    if (!isAvailable.deviceOrientationAvailable ||
+        !isAvailable.rotationRateAvailable) {
+      // alert('Device does not support gyroscope. Make sure to visit the ' +
+      //       'site on a smartphone.');
     }
 
     gyroscope.start(handleGyroscope);
   }).catch(function(e){
-    log(`Error: ${e}`);
+    alert(`Error: ${e}`);
   });
 }
 
@@ -68,9 +70,7 @@ async function requestSensorPermissions() {
   ])
     .then(results => {
       if (results.every(result => result.state === 'granted')) {
-        log('Permission granted to use orientation sensors.');
-      } else {
-        log('Error: Cannot use orientation sensors.');
+        console.log('Permission granted to use orientation sensors.');
       }
     });
 }
@@ -82,32 +82,25 @@ function connectToServer(id) {
 
 socket.on('connectedToServer', () => {
   clientServerIdElement.innerHTML = clientServerId;
-  log('Connected to server');
+  connectFormElement.style.display = 'none';
+  connectionElement.style.display = 'block';
 });
 
 socket.on('invalidServerId', () => {
-  log('Invalid server id');
+  alert(`Invalid server ID "${clientServerId}"`);
 });
 
 socket.on('serverDisconnected', () => {
-  log('Disconnected from server');
+  alert('Disconnected from server');
+  connectionElement.style.display = 'none';
+  connectFormElement.style.display = 'block';
 });
 
 function handleGyroscope(event) {
   let x = -event.dm.gamma;
   let y = event.dm.beta;
   let z = event.dm.alpha;
-  debugElement.innerHTML = `x: ${x}\ny: ${y}\nz: ${z}`;
   if (pointing) {
     socket.emit('moveRemote', x, y, z);
   }
-}
-
-//
-// Shared code
-//
-
-function log() {
-  logElement.innerHTML += Array.from(arguments).join(' ') + '\n';
-  console.log.apply(arguments, null);
 }
