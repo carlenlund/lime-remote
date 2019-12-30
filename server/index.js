@@ -24,7 +24,7 @@ app.on('ready', () => {
   });
   mainWindow.removeMenu();
 
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -49,7 +49,7 @@ app.on('ready', () => {
   overlayWindow.setIgnoreMouseEvents(true);
   overlayWindow.setAlwaysOnTop(true, 'screen');
 
-  overlayWindow.loadFile('overlay.html');
+  overlayWindow.loadFile(path.join(__dirname, 'overlay.html'));
 
   overlayWindow.on('closed', () => {
     mainWindow = null;

@@ -2,16 +2,17 @@
   "name": "lime-remote",
   "version": "0.0.0",
   "description": "Gyroscopic mouse input for desktops",
+  "main": "server/index.js",
   "scripts": {
-    "desktop": "electron desktop/",
-    "start": "node ."
+    "server": "electron server/",
+    "start": "node .",
+    "build": "electron-packager . limeremote --platform=win32 --arch=x64 --overwrite"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "feature-policy": "^0.4.0",
-    "heroku-ssl-redirect": "0.0.4",
     "ip": "^1.1.5",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0"
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "electron": "^7.1.7",
+    "electron-packager": "^14.1.1",
     "electron-rebuild": "^1.8.8"
   }
 }
