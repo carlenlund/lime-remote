@@ -3,6 +3,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const featurePolicy = require('feature-policy');
 const io = require('socket.io')(server);
 
@@ -13,6 +14,7 @@ let servers = {};
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use(featurePolicy({
   features: {
@@ -34,6 +36,8 @@ app.use(requireHTTPS);
 server.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
+
+io.set('origins', '*:*');
 
 io.on('connection', socket => {
   // Client
