@@ -1,11 +1,10 @@
 let logElement = document.querySelector('#log');
 
-let serverButtonElement = document.querySelector('#server-button');
-let serverIdElement = document.querySelector('#server-id');
+let machineIdElement = document.querySelector('#machine-id');
 
-ipcRenderer.on('serverCreated', (e, id) => {
+ipcRenderer.on('machineCreated', (e, id) => {
   console.log(id);
-  serverIdElement.innerHTML = id;
+  machineIdElement.innerHTML = id;
 });
 
 ipcRenderer.on('connectedToRemote', (e) => {

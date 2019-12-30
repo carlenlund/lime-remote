@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 let connections = {};
 
 app.use(express.static(__dirname + '/remote'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(featurePolicy({
