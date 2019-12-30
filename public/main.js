@@ -25,6 +25,8 @@ let clientDisconnectButtonElement =
     document.querySelector('#client-disconnect-button');
 clientDisconnectButtonElement.addEventListener('click', () => {
   socket.emit('disconnectFromServer');
+  connectionElement.style.display = 'none';
+  connectFormElement.style.display = 'block';
 });
 
 let clientPointButtonElement = document.querySelector('#client-point-button');
@@ -60,8 +62,8 @@ function initClient() {
     let isAvailable = gyroscope.isAvailable();
     if (!isAvailable.deviceOrientationAvailable ||
         !isAvailable.rotationRateAvailable) {
-      // alert('Device does not support gyroscope. Make sure to visit the ' +
-      //       'site on a smartphone.');
+      alert('Device does not support gyroscope. Make sure to visit the ' +
+            'site on a smartphone.');
     }
 
     gyroscope.start(handleGyroscope);
