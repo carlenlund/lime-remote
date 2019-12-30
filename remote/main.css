@@ -49,6 +49,7 @@ input {
 .input-group :not(:last-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  border-right: 1px solid #aaa;
 }
 
 .input-group :not(:first-child) {
