@@ -1,5 +1,10 @@
 const socket = io();
 
+const isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+
+const mouseDownEvent = isTouchDevice ? 'touchstart' : 'mousedown';
+const mouseUpEvent = isTouchDevice ? 'touchend' : 'mouseup';
+
 let connectedToMachine = false;
 let machineId = null;
 let pointing = false;
@@ -32,27 +37,13 @@ disconnectButtonElement.addEventListener('click', () => {
 let pointButtonElement = document.querySelector('#point-button');
 let buttonClickTime = 0;
 let clickTime = 500;
-pointButtonElement.addEventListener('mousedown', () => {
+pointButtonElement.addEventListener(mouseDownEvent, () => {
   pointing = true;
   socket.emit('startRemote');
   pointButtonElement.classList.add('point-button--active');
   buttonClickTime = Date.now();
 });
-pointButtonElement.addEventListener('touchstart', () => {
-  pointing = true;
-  socket.emit('startRemote');
-  pointButtonElement.classList.add('point-button--active');
-  buttonClickTime = Date.now();
-});
-pointButtonElement.addEventListener('mouseup', () => {
-  pointing = false;
-  socket.emit('stopRemote');
-  pointButtonElement.classList.remove('point-button--active');
-  if (Date.now() - buttonClickTime < clickTime) {
-    socket.emit('clickRemote');
-  }
-});
-pointButtonElement.addEventListener('touchend', () => {
+pointButtonElement.addEventListener(mouseUpEvent, () => {
   pointing = false;
   socket.emit('stopRemote');
   pointButtonElement.classList.remove('point-button--active');
