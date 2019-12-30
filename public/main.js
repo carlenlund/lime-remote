@@ -22,7 +22,7 @@ let connectionElement = document.querySelector('#connection');
 connectionElement.style.display = 'none';
 let clientServerIdElement = document.querySelector('#client-server-id');
 let clientDisconnectButtonElement =
-    document.querySelector('#client-connect-button');
+    document.querySelector('#client-disconnect-button');
 clientDisconnectButtonElement.addEventListener('click', () => {
   socket.emit('disconnectFromServer');
 });
