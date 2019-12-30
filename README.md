@@ -12,6 +12,7 @@ The project is inspired by Logitech's [Spotlight Presentation Remote](https://ww
 
 See build instructions below for usage on other platforms.
 
+<!--
 ## System overview
 
 The app consists of three parts: desktop client, remote client and main server.
@@ -23,6 +24,7 @@ When connected, the remote is able to send gyroscopic data and button input to t
 The desktop client runs as an [Electron](https://electronjs.org/) app.
 Backend code for both desktop and server is written in JavaScript using [Node.js](https://nodejs.org/en/).
 For internal communication the app uses WebSockets to send data between the server and clients.
+-->
 
 ## Build
 
