@@ -4,6 +4,7 @@ const http = require('http');
 const server = http.createServer(app);
 const bodyParser = require('body-parser');
 const featurePolicy = require('feature-policy');
+const sslify = require('express-sslify');
 const io = require('socket.io')(server);
 
 const port = process.env.PORT || 3000;
@@ -20,13 +21,7 @@ app.use(featurePolicy({
   },
 }));
 
-
-app.use((request, response, next) => {
-  if (!request.secure) {
-    response.redirect('https://' + request.readers.host + request.url);
-  }
-  next();
-});
+app.use(sslify.HTTPS());
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}...`);
