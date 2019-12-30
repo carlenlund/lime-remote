@@ -3,9 +3,6 @@ const socket = io('https://limeremote.herokuapp.com');
 let debugElement = document.querySelector('#debug');
 let logElement = document.querySelector('#log');
 
-let serverElement = document.querySelector('#server');
-serverElement.style.display = 'none';
-
 let lastTime = 0;
 let stopTime = 0;
 let position = {x: 0, y: 0};

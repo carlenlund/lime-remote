@@ -3,21 +3,12 @@ const socket = io();
 let debugElement = document.querySelector('#debug');
 let logElement = document.querySelector('#log');
 
-let clientElement = document.querySelector('#client');
-clientElement.style.display = 'none';
-
 let connectedToServer = false;
 let clientServerId = null;
 let pointing = false;
 
 let gyroscope = null;
 
-let clientButtonElement = document.querySelector('#client-button');
-clientButtonElement.addEventListener('click', () => {
-  initClient();
-  startElement.style.display = 'none';
-  clientElement.style.display = 'block';
-});
 let clientServerIdElement = document.querySelector('#client-server-id');
 let clientConnectButtonElement =
     document.querySelector('#client-connect-button');
@@ -36,6 +27,8 @@ clientPointButtonElement.addEventListener('touchend', () => {
   socket.emit('stopRemote');
   clientPointButtonElement.classList.remove('point-button--active');
 });
+
+initClient();
 
 function initClient() {
   requestSensorPermissions();
