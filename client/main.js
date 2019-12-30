@@ -47,7 +47,9 @@ clientPointButtonElement.addEventListener('touchend', () => {
   }
 });
 
-initClient();
+window.addEventListener('load', () => {
+  initClient();
+});
 
 function initClient() {
   requestSensorPermissions();
