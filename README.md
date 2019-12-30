@@ -1,8 +1,11 @@
 # Lime Remote
 
-Gyroscopic mouse input for desktops using a smartphone. Lime Remote works on most modern desktops and smartphones.
+Gyroscopic mouse input for desktop using your smartphone.
+A handy tool during presentations and in times where you can't reach your computer.
 
-The project is inspired by Logitech's [Spotlight Presentation Remote](https://www.logitech.com/en-us/product/spotlight-presentation-remote).
+Lime Remote is inspired by Logitech's [Spotlight Presentation Remote](https://www.logitech.com/en-us/product/spotlight-presentation-remote).
+
+![](https://i.imgur.com/lUUJ9rR.gif)
 
 ## Download
 
