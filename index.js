@@ -21,7 +21,7 @@ app.use(featurePolicy({
   },
 }));
 
-app.use(sslify.HTTPS());
+app.use(sslify.HTTPS({ trustProtoHeader: true }))
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}...`);
