@@ -81,7 +81,7 @@ socket.on('stopRemote', () => {
 });
 
 socket.on('clickRemote', () => {
-  robot.mouseclick('left');
+  robot.mouseClick('left');
 });
 
 update();
