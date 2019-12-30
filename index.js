@@ -20,12 +20,6 @@ app.use(featurePolicy({
   },
 }));
 
-app.get('*', function(request, response) {  
-  if (!request.secure) {
-    res.redirect('https://limeremote.herokuapp.com' + request.url);
-  }
-});
-
 server.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });

@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lime Remote</title>
   <link rel="stylesheet" href="main.css">
+  <script>
+    if (location.protocol !== "https:" &&
+        location.hostname !== 'localhost') {
+      location.protocol = "https:";
+    }
+  </script>
 </head>
 <body>
   <div id="client" class="client">
