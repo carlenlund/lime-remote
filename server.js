@@ -53,6 +53,15 @@ io.on('connection', socket => {
     connection.machineSocket.emit('disconnectFromRemote');
   });
 
+  socket.on('disconnect', () => {
+    let connection = getRemoteMachine(socket);
+    if (!connection) {
+      return;
+    }
+    connection.remoteSocket = null;
+    connection.machineSocket.emit('disconnectFromRemote');
+  });
+
   socket.on('startRemote', () => {
     let connection = getRemoteMachine(socket);
     if (connection) {
