@@ -1,5 +1,8 @@
 let logElement = document.querySelector('#log');
 
+let hostElement = document.querySelector('#host');
+hostElement.innerHTML = host.replace('http://', '').replace('https://', '');
+
 let machineIdElement = document.querySelector('#machine-id');
 
 ipcRenderer.on('machineCreated', (e, id) => {
