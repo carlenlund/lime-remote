@@ -121,8 +121,8 @@ socket.on('stopRemote', () => {
   overlayWindow.webContents.send('stopRemote');
 });
 
-socket.on('clickRemote', () => {
-  robot.mouseClick('left');
+socket.on('clickRemote', (button) => {
+  robot.mouseClick(button);
   mainWindow.webContents.send('clickRemote');
   overlayWindow.webContents.send('clickRemote');
 });

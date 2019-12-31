@@ -48,7 +48,7 @@ pointButtonElement.addEventListener(mouseUpEvent, () => {
   socket.emit('stopRemote');
   pointButtonElement.classList.remove('point-button--active');
   if (Date.now() - buttonClickTime < clickTime) {
-    socket.emit('clickRemote');
+    socket.emit('clickRemote', 'left');
   }
 });
 

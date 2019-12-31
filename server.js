@@ -83,10 +83,10 @@ io.on('connection', socket => {
     }
   });
 
-  socket.on('clickRemote', () => {
+  socket.on('clickRemote', (button) => {
     let connection = getRemoteMachine(socket);
     if (connection) {
-      connection.machineSocket.emit('clickRemote');
+      connection.machineSocket.emit('clickRemote', button);
     }
   });
 
