@@ -52,6 +52,15 @@ pointButtonElement.addEventListener(mouseUpEvent, () => {
   }
 });
 
+let backButtonElement = document.querySelector('#back-button');
+backButtonElement.addEventListener(mouseDownEvent, () => {
+  socket.emit('clickButton', 'left');
+  backButtonElement.classList.add('point-button--active');
+});
+backButtonElement.addEventListener(mouseUpEvent, () => {
+  backButtonElement.classList.remove('point-button--active');
+});
+
 window.addEventListener('load', () => {
   initClient();
 });

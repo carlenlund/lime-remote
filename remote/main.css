@@ -68,8 +68,7 @@ input {
 }
 
 .button {
-  /* background: #c8c8c8; */
-  background: #bf4;
+  background: #c8c8c8;
   border-radius: 3px;
   color: #000;
   cursor: pointer;
@@ -125,6 +124,11 @@ input {
 .point-button--active {
   background: #000;
   color: #fff;
+}
+
+.back-button {
+  height: 60px;
+  width: 60px;
 }
 
 .overlay {

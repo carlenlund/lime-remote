@@ -90,6 +90,13 @@ io.on('connection', socket => {
     }
   });
 
+  socket.on('clickButton', (button) => {
+    let connection = getRemoteMachine(socket);
+    if (connection) {
+      connection.machineSocket.emit('clickButton', button);
+    }
+  });
+
   // Machine
 
   socket.on('createMachine', () => {

@@ -127,6 +127,12 @@ socket.on('clickRemote', () => {
   overlayWindow.webContents.send('clickRemote');
 });
 
+socket.on('clickButton', (button) => {
+  robot.keyTap(button);
+  mainWindow.webContents.send('clickButton', button);
+  overlayWindow.webContents.send('clickButton', button);
+});
+
 update();
 
 function update() {
