@@ -19,11 +19,12 @@ See build instructions below for usage on other platforms.
 
 Install the Node modules with `npm install` followed by `npm run rebuild`.
 
-Start the main web server with `npm run server`.
-
-Start the desktop client with `npm run machine`.
+Start the desktop client with `npm run machine`. The app will attempt to connect to the host specified in `config.json`.
 
 Build an executable of the desktop client with `npm run build`.
+
+Although an instance of the main web server is already running on Heroku, you can host your own instance with `npm run server`.
+Note that using gyroscope sensors in the browser requires that SSL is enabled, so running the app on localhost requires a bit of tinkering.
 
 ## iOS gyroscope issues
 
