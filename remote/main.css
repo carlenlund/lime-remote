@@ -30,6 +30,10 @@ input {
   height: 100%;
 }
 
+#connection {
+  display: none;
+}
+
 .input-group {
   display: flex;
   align-items: stretch;
