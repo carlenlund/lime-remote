@@ -19,7 +19,7 @@ See build instructions below for usage on other platforms.
 
 Install the Node modules with `npm install` followed by `npm run rebuild`.
 
-Start the main web server with `npm run server`.
+Start the main web server with `npm run server`. Note that using gyroscope on the web requires a server using SSL, so testing the app on localhost requires a bit of tinkering.
 
 Start the desktop client with `npm run machine`.
 
