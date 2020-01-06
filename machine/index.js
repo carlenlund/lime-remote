@@ -1,5 +1,4 @@
 const {version} = require('../package.json');
-console.log(version);
 const config = require('../config.json');
 
 const {app, BrowserWindow, shell} = require('electron');
