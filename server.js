@@ -123,7 +123,9 @@ io.on('connection', socket => {
 });
 
 function getMachineId(socket) {
-  return socket.id.substr(0, 5).replace('-', '0').replace('_', '1');
+  // Generate a non-ambiguous, human-readable ID.
+  return socket.id.substr(0, 5).replace('-', '0').replace('_', '1')
+    .replace('l', 'L').replace('O', '0');
 }
 
 function getRemoteMachine(socket) {
