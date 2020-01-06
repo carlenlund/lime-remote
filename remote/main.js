@@ -110,7 +110,6 @@ socket.on('connectedToMachine', () => {
       `Connected to <code class="code">${machineId}</code>`;
   connectFormElement.style.display = 'none';
   connectionElement.style.display = 'block';
-  machineIdInputElement.value = '';
 });
 
 socket.on('invalidMachineId', () => {
