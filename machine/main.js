@@ -18,18 +18,6 @@ ipcRenderer.on('disconnectFromRemote', (e) => {
   log('Disconnected from remote');
 });
 
-ipcRenderer.on('startRemote', (e) => {
-});
-
-ipcRenderer.on('moveRemote', (e, x, y, z) => {
-});
-
-ipcRenderer.on('stopRemote', (e) => {
-});
-
-ipcRenderer.on('clickRemote', (e) => {
-});
-
 function log() {
   logElement.innerHTML += Array.from(arguments).join(' ') + '\n';
   console.log.apply(arguments, null);

@@ -1,8 +1,4 @@
-let lastTime = 0;
-let currentPosition = robot.getMousePos();
-let position = {x: currentPosition.x, y: currentPosition.y};
-let velocity = {x: 0, y: 0};
-let pointerSpeed = {x: 15, y: 15};
+let position = {x: 0, y: 0};
 let showPointer = false;
 let pointerRadius = 250;
 
@@ -11,8 +7,7 @@ let screenSize = robot.getScreenSize();
 canvas.width = screenSize.width;
 canvas.height = screenSize.height;
 
-ipcRenderer.on('connectedToRemote', (e) => {
-});
+let ctx = canvas.getContext('2d');
 
 ipcRenderer.on('disconnectFromRemote', (e) => {
   showPointer = false;
@@ -23,39 +18,24 @@ ipcRenderer.on('startRemote', (e) => {
   position = {x: currentPosition.x, y: currentPosition.y};
 });
 
-ipcRenderer.on('moveRemote', (e, x, y, z) => {
-  velocity = {x: x * pointerSpeed.x, y: -z * pointerSpeed.y};
+ipcRenderer.on('moveRemote', (x, y, z) => {
   showPointer = true;
 });
 
-ipcRenderer.on('stopRemote', (e) => {
-  velocity = {x: 0, y: 0};
-  showPointer = false;
+ipcRenderer.on('moveTo', (e, x, y, z) => {
+  position = {x: x, y: y, z: z};
 });
 
-ipcRenderer.on('clickRemote', (e) => {
+ipcRenderer.on('stopRemote', (e) => {
+  showPointer = false;
 });
 
 update();
 
 function update() {
-  let time = Date.now();
-  let deltaTime = (time - lastTime) / 1000;
-  lastTime = time;
-
-  position.x += velocity.x * deltaTime;
-  position.y += velocity.y * deltaTime;
-
-  let screenSize = robot.getScreenSize();
-  let screenWidth = screenSize.width;
-  let screenHeight = screenSize.height;
-  position.x = Math.max(0, Math.min(screenWidth, position.x));
-  position.y = Math.max(0, Math.min(screenHeight, position.y));
-
-  let ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   if (showPointer) {
-    ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = 'rgba(0,0,0,.7)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 

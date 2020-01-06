@@ -12,8 +12,7 @@ let mainWindow = null;
 let overlayWindow = null;
 
 let lastTime = 0;
-let currentPosition = robot.getMousePos();
-let position = {x: currentPosition.x, y: currentPosition.y};
+let position = {x: 0, y: 0};
 let velocity = {x: 0, y: 0};
 let pointerSpeed = {x: 15, y: 15};
 
@@ -152,6 +151,8 @@ function update() {
   if (velocity.x || velocity.y) {
     robot.setMouseDelay(2);
     robot.moveMouse(position.x, position.y);
+    mainWindow.webContents.send('moveTo', position.x, position.y, position.z);
+    overlayWindow.webContents.send('moveTo', position.x, position.y, position.z);
   }
 
   setTimeout(update, 1000 / 60);
