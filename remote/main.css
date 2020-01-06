@@ -121,6 +121,10 @@ a {
   height: 100px;
   margin: 0 auto;
   user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
   -webkit-tap-highlight-color: transparent;
   width: 100px;
 }
