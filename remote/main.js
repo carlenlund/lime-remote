@@ -75,15 +75,11 @@ function initClient() {
     decimalCount: 2,
   };
   gyroscope.init(args).then(function() {
-    let isAvailable = gyroscope.isAvailable();
-    if (!isAvailable.rotationRateAvailable) {
-      alert('Device does not appear to support gyroscope. Make sure to visit the ' +
-            'site on a smartphone.');
-    }
-
     gyroscope.start(handleGyroscope);
   }).catch(function(e){
-    alert(`Error: ${e}`);
+    // TODO: Alert only when gyroscope is NOT supported.
+    // alert('Device does not appear to support gyroscope. Make sure to visit the ' +
+    //       'site on a smartphone.');
   });
 }
 
