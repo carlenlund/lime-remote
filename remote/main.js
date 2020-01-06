@@ -76,9 +76,8 @@ function initClient() {
   };
   gyroscope.init(args).then(function() {
     let isAvailable = gyroscope.isAvailable();
-    if (!isAvailable.deviceOrientationAvailable ||
-        !isAvailable.rotationRateAvailable) {
-      alert('Device does not support gyroscope. Make sure to visit the ' +
+    if (!isAvailable.rotationRateAvailable) {
+      alert('Device does not appear to support gyroscope. Make sure to visit the ' +
             'site on a smartphone.');
     }
 
@@ -115,7 +114,7 @@ socket.on('connectedToMachine', () => {
 });
 
 socket.on('invalidMachineId', () => {
-  alert(`Invalid machine ID "${machineId}"`);
+  alert(`Could not connect to "${machineId}"`);
 });
 
 socket.on('machineDisconnected', () => {
