@@ -131,9 +131,8 @@ function disconnected() {
 
 function handleGyroscope(event) {
   let x = -event.dm.gamma;
-  let y = event.dm.beta;
-  let z = event.dm.alpha;
+  let y = event.dm.alpha;
   if (pointing) {
-    socket.emit('moveRemote', x, y, z);
+    socket.emit('moveRemote', x, y);
   }
 }

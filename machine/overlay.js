@@ -18,12 +18,12 @@ ipcRenderer.on('startRemote', (e) => {
   position = {x: currentPosition.x, y: currentPosition.y};
 });
 
-ipcRenderer.on('moveRemote', (x, y, z) => {
+ipcRenderer.on('moveRemote', (x, y) => {
   showPointer = true;
 });
 
-ipcRenderer.on('moveTo', (e, x, y, z) => {
-  position = {x: x, y: y, z: z};
+ipcRenderer.on('moveTo', (e, x, y) => {
+  position = {x: x, y: y};
 });
 
 ipcRenderer.on('stopRemote', (e) => {

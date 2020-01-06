@@ -69,10 +69,10 @@ io.on('connection', socket => {
     }
   });
 
-  socket.on('moveRemote', (x, y, z) => {
+  socket.on('moveRemote', (x, y) => {
     let connection = getRemoteMachine(socket);
     if (connection) {
-      connection.machineSocket.emit('moveRemote', x, y, z);
+      connection.machineSocket.emit('moveRemote', x, y);
     }
   });
 

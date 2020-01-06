@@ -108,10 +108,10 @@ socket.on('startRemote', () => {
   overlayWindow.webContents.send('startRemote');
 });
 
-socket.on('moveRemote', (x, y, z) => {
-  velocity = {x: x * pointerSpeed.x, y: -z * pointerSpeed.y};
-  mainWindow.webContents.send('moveRemote', x, y, z);
-  overlayWindow.webContents.send('moveRemote', x, y, z);
+socket.on('moveRemote', (x, y) => {
+  velocity = {x: x * pointerSpeed.x, y: -y * pointerSpeed.y};
+  mainWindow.webContents.send('moveRemote', x, y);
+  overlayWindow.webContents.send('moveRemote', x, y);
 });
 
 socket.on('stopRemote', () => {
@@ -151,8 +151,8 @@ function update() {
   if (velocity.x || velocity.y) {
     robot.setMouseDelay(2);
     robot.moveMouse(position.x, position.y);
-    mainWindow.webContents.send('moveTo', position.x, position.y, position.z);
-    overlayWindow.webContents.send('moveTo', position.x, position.y, position.z);
+    mainWindow.webContents.send('moveTo', position.x, position.y);
+    overlayWindow.webContents.send('moveTo', position.x, position.y);
   }
 
   setTimeout(update, 1000 / 60);
