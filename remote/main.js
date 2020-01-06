@@ -5,7 +5,7 @@ const isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 const mouseDownEvent = isTouchDevice ? 'touchstart' : 'mousedown';
 const mouseUpEvent = isTouchDevice ? 'touchend' : 'mouseup';
 
-let connectedToMachine = false;
+let connected = false;
 let machineId = null;
 let pointing = false;
 
@@ -106,6 +106,7 @@ function connectToMachine(id) {
 }
 
 socket.on('connectedToMachine', () => {
+  connected = true;
   machineIdElement.innerHTML =
       `Connected to <code class="code">${machineId}</code>`;
   connectFormElement.style.display = 'none';
@@ -124,6 +125,10 @@ socket.on('disconnect', () => {
 });
 
 function disconnected() {
+  if (!connected) {
+    return;
+  }
+  connected = false;
   alert('Disconnected from machine');
   connectionElement.style.display = 'none';
   connectFormElement.style.display = 'block';
