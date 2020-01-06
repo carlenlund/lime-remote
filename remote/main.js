@@ -137,3 +137,18 @@ function handleGyroscope(event) {
     socket.emit('moveRemote', x, y);
   }
 }
+
+socket.on('alarm', num => {
+  vibrate(num);
+});
+
+function vibrate(num) {
+  loop();
+  function loop() {
+    navigator.vibrate(50);
+    --num;
+    if (num > 0) {
+      setTimeout(loop, 500);
+    }
+  }
+}
