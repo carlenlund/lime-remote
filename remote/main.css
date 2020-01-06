@@ -111,6 +111,10 @@ input {
   color: #bf4;
 }
 
+a {
+  color: #bf4;
+}
+
 .point-button {
   border-radius: 100px;
   display: block;

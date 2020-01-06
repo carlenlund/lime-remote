@@ -1,6 +1,8 @@
+const {version} = require('../package.json');
+console.log(version);
 const config = require('../config.json');
 
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, shell} = require('electron');
 const path = require('path');
 const robot = require('robotjs');
 const io = require('socket.io-client');
@@ -50,6 +52,11 @@ function createWindows() {
     initMachine();
   });
 
+  mainWindow.webContents.on('new-window', (e, url) => {
+    e.preventDefault();
+    shell.openExternal(url);
+  });
+
   overlayWindow = new BrowserWindow({
     frame: false,
     transparent: true,
@@ -81,7 +88,11 @@ function initMachine() {
   update();
 }
 
-socket.on('machineCreated', (id) => {
+socket.on('machineCreated', (id, serverVersion) => {
+  if (serverVersion !== version) {
+    mainWindow.webContents.send('badVersion', version, serverVersion);
+    overlayWindow.webContents.send('badVersion', version, serverVersion);
+  }
   console.log(id);
   mainWindow.webContents.send('machineCreated', id);
   overlayWindow.webContents.send('machineCreated', id);

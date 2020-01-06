@@ -1,3 +1,5 @@
+const {version} = require('./package.json');
+
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -106,7 +108,7 @@ io.on('connection', socket => {
       remoteSocket: null,
     };
     connections[machineId] = connection;
-    connection.machineSocket.emit('machineCreated', machineId);
+    connection.machineSocket.emit('machineCreated', machineId, version);
   });
 
   socket.on('disconnect', () => {
