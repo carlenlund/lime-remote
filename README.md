@@ -9,9 +9,9 @@ Lime Remote is inspired by Logitech's [Spotlight Presentation Remote](https://ww
 
 ## Download
 
-[Windows 64-bit](https://github.com/carlenlund/lime-remote/releases/download/v0.0.3/limeremote-win32-x64-v0.0.3.zip)
+[Windows 64-bit](https://github.com/carlenlund/lime-remote/releases/download/v0.1.0/limeremote-win32-x64-v0.1.0.zip)
 
-[Windows 32-bit](https://github.com/carlenlund/lime-remote/releases/download/v0.0.3/limeremote-win32-ia32-v0.0.3.zip)
+[Windows 32-bit](https://github.com/carlenlund/lime-remote/releases/download/v0.1.0/limeremote-win32-ia32-v0.1.0.zip)
 
 See build instructions below for usage on other platforms.
 
