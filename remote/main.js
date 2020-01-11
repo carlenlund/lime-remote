@@ -35,13 +35,16 @@ disconnectButtonElement.addEventListener('click', () => {
 
 let pointButtonElement = document.querySelector('#point-button');
 let buttonClickTime = 0;
+let clicking = false;
 let clickDelay = 500;
 pointButtonElement.addEventListener(mouseDownEvent, () => {
+  clicking = true;
   socket.emit('startRemote');
   pointButtonElement.classList.add('point-button--active');
   buttonClickTime = Date.now();
 });
 pointButtonElement.addEventListener(mouseUpEvent, () => {
+  clicking = false;
   socket.emit('stopRemote');
   pointButtonElement.classList.remove('point-button--active');
   if (Date.now() - buttonClickTime < clickDelay) {
@@ -130,7 +133,7 @@ function disconnected() {
 function handleGyroscope(event) {
   let x = -event.dm.gamma;
   let y = event.dm.alpha;
-  if (Date.now() - buttonClickTime >= clickDelay) {
+  if (clicking && Date.now() - buttonClickTime >= clickDelay) {
     socket.emit('moveRemote', x, y);
   }
 }
