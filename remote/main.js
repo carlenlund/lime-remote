@@ -36,7 +36,7 @@ disconnectButtonElement.addEventListener('click', () => {
 let pointButtonElement = document.querySelector('#point-button');
 let buttonClickTime = 0;
 let clicking = false;
-let clickDelay = 500;
+let clickDelay = 350;  // Delay before enabling pointer movement on machine.
 pointButtonElement.addEventListener(mouseDownEvent, () => {
   clicking = true;
   socket.emit('startRemote');
