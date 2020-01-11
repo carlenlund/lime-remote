@@ -15,7 +15,7 @@ let overlayWindow = null;
 let lastTime = 0;
 let position = {x: 0, y: 0};
 let velocity = {x: 0, y: 0};
-let pointerSpeed = {x: 15, y: 15};
+let pointerSpeed = {x: 20, y: 20};
 
 app.on('ready', () => {
   createWindows();

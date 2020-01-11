@@ -7,7 +7,6 @@ const mouseUpEvent = isTouchDevice ? 'touchend' : 'mouseup';
 
 let connected = false;
 let machineId = null;
-let pointing = false;
 
 let gyroscope = null;
 
@@ -36,18 +35,19 @@ disconnectButtonElement.addEventListener('click', () => {
 
 let pointButtonElement = document.querySelector('#point-button');
 let buttonClickTime = 0;
-let clickTime = 500;
+let clicking = false;
+let clickDelay = 350;  // Delay before enabling pointer movement on machine.
 pointButtonElement.addEventListener(mouseDownEvent, () => {
-  pointing = true;
+  clicking = true;
   socket.emit('startRemote');
   pointButtonElement.classList.add('point-button--active');
   buttonClickTime = Date.now();
 });
 pointButtonElement.addEventListener(mouseUpEvent, () => {
-  pointing = false;
+  clicking = false;
   socket.emit('stopRemote');
   pointButtonElement.classList.remove('point-button--active');
-  if (Date.now() - buttonClickTime < clickTime) {
+  if (Date.now() - buttonClickTime < clickDelay) {
     socket.emit('clickRemote', 'left');
   }
 });
@@ -133,7 +133,7 @@ function disconnected() {
 function handleGyroscope(event) {
   let x = -event.dm.gamma;
   let y = event.dm.alpha;
-  if (pointing) {
+  if (clicking && Date.now() - buttonClickTime >= clickDelay) {
     socket.emit('moveRemote', x, y);
   }
 }
